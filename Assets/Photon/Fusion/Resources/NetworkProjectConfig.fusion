@@ -14,27 +14,25 @@
     "HideNetworkObjectInactivityGuard": false,
     "Simulation": {
         "InputDataWordCount": 0,
-        "ReplicationFeatures": 1,
+        "SceneInfoWordCount": 16,
+        "ReplicationFeatures": 0,
         "InputTransferMode": 0,
         "PlayerCount": 10,
         "TickRateSelection": {
-            "Client": 64,
+            "Client": 32,
             "ServerIndex": 0,
-            "ClientSendIndex": 1,
-            "ServerSendIndex": 1
+            "ClientSendIndex": 0,
+            "ServerSendIndex": 0
         }
     },
     "Network": {
-        "ConnectionTimeout": 10.0,
+        "ConnectionTimeout": 60.0,
         "ConnectionShutdownTime": 1.0,
         "ReliableDataTransferModes": 3
     },
     "HostMigration": {
         "EnableAutoUpdate": false,
         "UpdateDelay": 10
-    },
-    "EncryptionConfig": {
-        "EnableEncryption": false
     },
     "NetworkConditions": {
         "Enabled": false,
@@ -59,7 +57,8 @@
     "AssembliesToWeave": [
         "Fusion.Unity",
         "Assembly-CSharp",
-        "Assembly-CSharp-firstpass"
+        "Assembly-CSharp-firstpass",
+        "Fusion.UnityPhysics"
     ],
     "UseSerializableDictionary": true,
     "NullChecksForNetworkedProperties": true,
