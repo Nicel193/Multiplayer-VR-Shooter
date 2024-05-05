@@ -2749,7 +2749,7 @@ Transform:
   - {fileID: 2117324586}
   - {fileID: 1002278944}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &770101721
 PrefabInstance:
@@ -2907,7 +2907,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &859173046
 PrefabInstance:
@@ -7132,8 +7132,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SortKey: 2982507637
   ObjectInterest: 1
-  _DestroyWhenStateAuthorityLeaves: 0
-  _AllowStateAuthorityOverride: 1
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
@@ -8530,8 +8528,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SortKey: 3131874833
   ObjectInterest: 1
-  _DestroyWhenStateAuthorityLeaves: 0
-  _AllowStateAuthorityOverride: 1
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
