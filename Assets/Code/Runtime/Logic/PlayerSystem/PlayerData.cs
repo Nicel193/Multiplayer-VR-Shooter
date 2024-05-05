@@ -8,11 +8,11 @@ namespace Code.Runtime.Logic
     {
         public event Action OnPlayerDead;
         
-        public int MAXHealth { get; private set; }
-        public int MAXAmmo { get; private set; }
+        [Networked] public int MAXHealth { get; private set; }
+        [Networked] public int MAXAmmo { get; private set; }
         
-        public int Health { get; private set; }
-        public int Ammo { get; private set; }
+        [Networked] public int Health { get; private set; }
+        [Networked] public int Ammo { get; private set; }
 
         public void Initialize(int maxHealth, int maxAmmo)
         {
