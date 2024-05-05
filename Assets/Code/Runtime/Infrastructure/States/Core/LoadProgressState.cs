@@ -1,5 +1,6 @@
 ﻿using Code.Runtime.Infrastructure.StateMachines;
 using Code.Runtime.Repositories;
+using Fusion;
 
 namespace Code.Runtime.Infrastructure.States.Core
 {
@@ -16,7 +17,8 @@ namespace Code.Runtime.Infrastructure.States.Core
 
         public void Enter()
         {
-            _gameStateMachine.Enter<LoadSceneState, string>(SceneName.Gameplay.ToString());
+            _gameStateMachine
+                .Enter<LoadGameplayState, (string sessionName, GameMode gameMode)>(("Test", GameMode.Shared));
         }
 
         public void Exit()

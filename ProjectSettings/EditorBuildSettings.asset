@@ -10,7 +10,7 @@ EditorBuildSettings:
     guid: a615fcc5dab39964c87b0785d278893c
   - enabled: 1
     path: Assets/Scenes/Gameplay.unity
-    guid: 3651a76d14cb8454c96a9486ec26f729
+    guid: ab207c7f2137d9d41bf5e26189884fcf
   - enabled: 1
     path: Assets/Scenes/TestVR.unity
     guid: 42e089cd92e45a44bb6d23cbd08387d2
