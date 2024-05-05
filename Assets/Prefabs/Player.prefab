@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3671508335147953086}
   - component: {fileID: 6275060320200005401}
   - component: {fileID: 9043004426478996567}
-  - component: {fileID: 3649709805746817384}
   - component: {fileID: 5911460556788202505}
   - component: {fileID: 6613800669815143920}
   m_Layer: 0
@@ -66,22 +65,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localXROrigin: {fileID: 0}
---- !u!114 &3649709805746817384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3659165731681051437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 701b8aa13620465e8a49e1c9f8c0801b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _MAXHealth: 0
-  _MAXAmmo: 0
-  _Health: 0
-  _Ammo: 0
 --- !u!114 &5911460556788202505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,7 +99,6 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 9043004426478996567}
-  - {fileID: 3649709805746817384}
   - {fileID: 5911460556788202505}
   - {fileID: 6295433392836401837}
   - {fileID: 5412220049920853816}
@@ -289,14 +271,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4340727829032842268}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff6cbcff9ec94c14aa0befc88f6e89d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthImage: {fileID: 5643888280893447772}
   ammoText: {fileID: 2323240367688613861}
-  playerData: {fileID: 3649709805746817384}
+  playerData: {fileID: 0}
 --- !u!1 &6344940352751361116
 GameObject:
   m_ObjectHideFlags: 0
