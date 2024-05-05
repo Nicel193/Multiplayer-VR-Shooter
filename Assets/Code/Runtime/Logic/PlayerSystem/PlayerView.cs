@@ -10,7 +10,7 @@ namespace Code.Runtime.Logic.PlayerSystem
 
         public override void Spawned()
         {
-            if(!Object.HasInputAuthority) return;
+            if(Runner.LocalPlayer != Object.InputAuthority) return;
 
             localXROrigin = FindObjectOfType<XROrigin>();
         }
