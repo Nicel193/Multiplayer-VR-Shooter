@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -8,28 +7,46 @@ namespace Code.Runtime.Logic
     {
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private Transform spawnPoint;
+        [SerializeField] private XRSocketInteractor xrSocketInteractor;
         [SerializeField] private float shootForce;
-        
+
         private XRGrabInteractable _xrGrabInteractable;
+        private Magazine _currentMagazine;
 
         private void Awake()
         {
             _xrGrabInteractable = GetComponent<XRGrabInteractable>();
         }
 
-        private void OnEnable() =>
+        private void OnEnable()
+        {
             _xrGrabInteractable.activated.AddListener(Shoot);
+            xrSocketInteractor.selectEntered.AddListener(SelectObject);
+        }
 
-        private void OnDisable() =>
+        private void OnDisable()
+        {
             _xrGrabInteractable.activated.RemoveListener(Shoot);
+            xrSocketInteractor.selectEntered.RemoveListener(SelectObject);
+        }
 
         private void Shoot(ActivateEventArgs arg)
         {
+            if (_currentMagazine == null || !_currentMagazine.HasAmmo()) return;
+            
             GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
             Rigidbody rigidbody = bullet.GetComponent<Rigidbody>();
-            
+
             rigidbody.AddForce(spawnPoint.forward * shootForce, ForceMode.Impulse);
             Destroy(bullet, 5f);
+            
+            _currentMagazine.UseAmmo();
+        }
+
+        private void SelectObject(SelectEnterEventArgs arg)
+        {
+            if (arg.interactableObject.transform.TryGetComponent(out Magazine magazine))
+                _currentMagazine = magazine;
         }
     }
 }
