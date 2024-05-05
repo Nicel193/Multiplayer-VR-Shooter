@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Code.Runtime.Infrastructure.StateMachines;
 using Code.Runtime.Infrastructure.States.Gameplay;
 using Fusion;
@@ -13,8 +12,8 @@ namespace Code.Runtime.Logic
     {
         public event Action OnPlayerJoined;
         
-        private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
-        private List<NetworkObject> _activePlayers = new List<NetworkObject>();
+        private readonly Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
+        private readonly List<NetworkObject> _activePlayers = new List<NetworkObject>();
         
         private GameplayStateMachine _gameplayStateMachine;
 
@@ -32,7 +31,7 @@ namespace Code.Runtime.Logic
 
         public void PlayerJoined(PlayerRef player)
         {
-            if (!Runner.IsServer) return;
+            if (player != Runner.LocalPlayer) return;
             
             _gameplayStateMachine.Enter<LoadState, PlayerRef>(player);
             
