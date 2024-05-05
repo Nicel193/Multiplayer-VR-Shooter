@@ -31,8 +31,6 @@ namespace Code.Runtime.Logic
 
         public void PlayerJoined(PlayerRef player)
         {
-            if (player != Runner.LocalPlayer) return;
-            
             _gameplayStateMachine.Enter<LoadState, PlayerRef>(player);
             
             OnPlayerJoined?.Invoke();
