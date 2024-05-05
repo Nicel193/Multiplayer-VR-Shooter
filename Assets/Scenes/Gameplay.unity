@@ -1886,9 +1886,11 @@ GameObject:
   - component: {fileID: 547116519}
   - component: {fileID: 547116518}
   - component: {fileID: 547116517}
+  - component: {fileID: 547116520}
   - component: {fileID: 547116515}
   - component: {fileID: 547116514}
-  - component: {fileID: 547116520}
+  - component: {fileID: 547116522}
+  - component: {fileID: 547116521}
   m_Layer: 0
   m_Name: Pistol
   m_TagString: Untagged
@@ -2162,6 +2164,46 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.02675139, y: 0.13304017, z: 0.21896309}
   m_Center: {x: 0.00092041306, y: -0.017900713, z: 0.03644365}
+--- !u!114 &547116521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547116512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 625208325
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 547116522}
+--- !u!114 &547116522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547116512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a591d221a634417e9827eb58e17de84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 1
+  _interpolationTarget: {fileID: 0}
+  UsePreciseRotation: 0
+  UseRenderSleepThresholds: 1
+  RenderThresholds:
+    UseEnergy: 1
+    Position: 0.01
+    Rotation: 0.01
+    Scale: 0.01
 --- !u!1001 &562296071
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8691,6 +8733,8 @@ GameObject:
   - component: {fileID: 5726957326497337885}
   - component: {fileID: 5726957326497337886}
   - component: {fileID: 5726957326497337888}
+  - component: {fileID: 5726957326497337890}
+  - component: {fileID: 5726957326497337889}
   m_Layer: 0
   m_Name: Magazine
   m_TagString: Untagged
@@ -8957,3 +9001,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecade3ad82f74ee8a46e7489dc14ab61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5726957326497337889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5703913801743507366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 4260762416
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 5726957326497337890}
+--- !u!114 &5726957326497337890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5703913801743507366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a591d221a634417e9827eb58e17de84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 1
+  _interpolationTarget: {fileID: 0}
+  UsePreciseRotation: 0
+  UseRenderSleepThresholds: 1
+  RenderThresholds:
+    UseEnergy: 1
+    Position: 0.01
+    Rotation: 0.01
+    Scale: 0.01
