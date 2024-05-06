@@ -31,7 +31,9 @@ namespace Code.Runtime.Logic
 
         public void PlayerJoined(PlayerRef player)
         {
-            if (Runner.Topology != Topologies.ClientServer && player == Runner.LocalPlayer)
+            Debug.Log("Player joined: " + player.PlayerId);
+            
+            if (Runner.Topology != Topologies.ClientServer)
             {
                 _gameplayStateMachine.Enter<LoadState, PlayerRef>(player);
 
