@@ -17,7 +17,7 @@ namespace Code.Runtime.Logic.PlayerSystem
         
         public void CreatePlayer(PlayerRef playerRef)
         {
-            PlayerView playerView = _networkRunner.Spawn(_playerConfig.PlayerViewPrefab, Vector3.zero, Quaternion.identity, playerRef);
+            NetworkPlayer networkPlayer = _networkRunner.Spawn(_playerConfig.NetworkPlayerPrefab, Vector3.zero, Quaternion.identity, playerRef);
         }
     }
 }
