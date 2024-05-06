@@ -40,8 +40,7 @@ namespace Code.Runtime.Logic
         private async void Grab(SelectEnterEventArgs arg)
         {
             GetAuthority();
-
-            _interactorObject = arg.interactorObject;
+            
         }
 
         public async void GetAuthority()
@@ -50,16 +49,6 @@ namespace Code.Runtime.Logic
 
             while (Object.HasStateAuthority == false)
                 await Task.Delay(100);
-        }
-
-        public override void FixedUpdateNetwork()
-        {
-            Debug.Log(_interactorObject);
-
-            if (_interactorObject == null) return;
-
-            transform.position = _interactorObject.transform.position;
-            transform.rotation = _interactorObject.transform.rotation;
         }
 
         private void Shoot(ActivateEventArgs arg)
