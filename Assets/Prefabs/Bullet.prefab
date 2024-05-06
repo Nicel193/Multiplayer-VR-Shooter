@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 6822970752405519783}
   - component: {fileID: 4365645154008903935}
   - component: {fileID: 6523933056996810513}
-  - component: {fileID: 456797110674103111}
   - component: {fileID: 6984898312271569359}
+  - component: {fileID: 456797110674103111}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -129,25 +129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3281530ce2f54c21b6e5f45c98c37fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &456797110674103111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8867342937060138239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SortKey: 711014701
-  ObjectInterest: 1
-  Flags: 262145
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 6523933056996810513}
-  - {fileID: 6984898312271569359}
 --- !u!114 &6984898312271569359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,3 +151,22 @@ MonoBehaviour:
     Position: 0.01
     Rotation: 0.01
     Scale: 0.01
+--- !u!114 &456797110674103111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8867342937060138239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 711014701
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 6523933056996810513}
+  - {fileID: 6984898312271569359}

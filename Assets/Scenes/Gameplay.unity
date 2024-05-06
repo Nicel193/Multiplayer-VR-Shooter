@@ -6432,7 +6432,7 @@ PrefabInstance:
     - target: {fileID: 1702879254813772857, guid: a8f2bd9d7969dd7479ab73f2f7b2bc9b, type: 3}
       propertyPath: m_StartingSelectedInteractable
       value: 
-      objectReference: {fileID: 5726957326497337886}
+      objectReference: {fileID: 0}
     - target: {fileID: 1702879254813772858, guid: a8f2bd9d7969dd7479ab73f2f7b2bc9b, type: 3}
       propertyPath: m_IsTrigger
       value: 1
