@@ -30,7 +30,7 @@ namespace Code.Runtime.Logic.PlayerSystem
 
             Vector3 xROriginCameraPosition = _playerRig.Camera.transform.position;
 
-            transform.position = new Vector3(xROriginCameraPosition.x, transform.position.y, xROriginCameraPosition.z);
+            transform.position = new Vector3(xROriginCameraPosition.x, 0f, xROriginCameraPosition.z);
             
             leftHand.transform.position = _playerRig.LeftHand.position;
             leftHand.transform.rotation = _playerRig.LeftHand.rotation;
