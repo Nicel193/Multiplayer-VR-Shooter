@@ -7,8 +7,8 @@ namespace Code.Runtime.Logic.PlayerSystem
     public class PlayerView : NetworkBehaviour
     {
         [SerializeField] private XROrigin localXROrigin;
-        
-        private bool IsLocalNetworkRig => Object && Object.HasStateAuthority;
+
+        private bool IsLocalNetworkRig => Object && Object.HasInputAuthority;
 
         public override void Spawned()
         {

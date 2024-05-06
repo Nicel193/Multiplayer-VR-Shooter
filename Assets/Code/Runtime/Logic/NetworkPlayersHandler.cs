@@ -52,7 +52,7 @@ namespace Code.Runtime.Logic
         {
             Debug.Log("Player joined: " + player.PlayerId);
 
-            if (Runner.Topology != Topologies.ClientServer && player == Runner.LocalPlayer)
+            if (Runner.Topology != Topologies.ClientServer)
             {
                 _gameplayStateMachine.Enter<LoadState, PlayerRef>(player);
             }
