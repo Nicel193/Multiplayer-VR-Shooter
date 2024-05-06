@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Fusion;
 using Fusion.XR.Shared;
 using Unity.VisualScripting;
@@ -36,16 +37,29 @@ namespace Code.Runtime.Logic
             xrSocketInteractor.selectEntered.RemoveListener(SelectObject);
         }
 
-        private void Grab(SelectEnterEventArgs arg)
+        private async void Grab(SelectEnterEventArgs arg)
         {
+            GetAuthority();
+            
             _interactorObject = arg.interactorObject;
+        }
+
+        public async void GetAuthority()
+        {
+            if (Runner.IsSharedModeMasterClient)
+            {
+                Object.RequestStateAuthority();
+
+                while (Object.HasStateAuthority == false)
+                    await Task.Delay(100);
+            }
         }
 
         public override void FixedUpdateNetwork()
         {
             Debug.Log(_interactorObject);
-            
-            if(_interactorObject == null) return;
+
+            if (_interactorObject == null) return;
 
             transform.position = _interactorObject.transform.position;
             transform.rotation = _interactorObject.transform.rotation;
@@ -54,13 +68,13 @@ namespace Code.Runtime.Logic
         private void Shoot(ActivateEventArgs arg)
         {
             if (_currentMagazine == null || !_currentMagazine.HasAmmo()) return;
-            
+
             GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
             Rigidbody rigidbody = bullet.GetComponent<Rigidbody>();
 
             rigidbody.AddForce(spawnPoint.forward * shootForce, ForceMode.Impulse);
             Destroy(bullet, 5f);
-            
+
             _currentMagazine.UseAmmo();
         }
 
