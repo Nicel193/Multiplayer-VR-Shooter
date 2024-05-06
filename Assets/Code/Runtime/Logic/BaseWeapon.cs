@@ -43,6 +43,8 @@ namespace Code.Runtime.Logic
 
         public override void FixedUpdateNetwork()
         {
+            Debug.Log(_interactorObject);
+            
             if(_interactorObject == null) return;
 
             transform.position = _interactorObject.transform.position;
