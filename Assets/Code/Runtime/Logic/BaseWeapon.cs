@@ -40,19 +40,16 @@ namespace Code.Runtime.Logic
         private async void Grab(SelectEnterEventArgs arg)
         {
             GetAuthority();
-            
+
             _interactorObject = arg.interactorObject;
         }
 
         public async void GetAuthority()
         {
-            if (Runner.IsSharedModeMasterClient)
-            {
-                Object.RequestStateAuthority();
+            Object.RequestStateAuthority();
 
-                while (Object.HasStateAuthority == false)
-                    await Task.Delay(100);
-            }
+            while (Object.HasStateAuthority == false)
+                await Task.Delay(100);
         }
 
         public override void FixedUpdateNetwork()
