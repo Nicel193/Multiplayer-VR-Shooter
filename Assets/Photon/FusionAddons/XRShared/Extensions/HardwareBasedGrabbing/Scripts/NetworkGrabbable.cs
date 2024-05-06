@@ -91,14 +91,7 @@ namespace Fusion.XR.Shared.Grabbing
             // We waited to have the state authority before setting Networked vars
             LocalPositionOffset = grabbable.localPositionOffset;
             LocalRotationOffset = grabbable.localRotationOffset;
-
-            if(grabbable.currentGrabber==null)
-            {
-                // The grabbable has already been ungrabbed
-                return;
-            }
-            // Update the CurrentGrabber in order to start following position in the FixedUpdateNetwork
-            CurrentGrabber = grabbable.currentGrabber.networkGrabber;
+            
         }
         #endregion
 
@@ -179,13 +172,13 @@ namespace Fusion.XR.Shared.Grabbing
         protected virtual void ExtrapolateWhileTakingAuthority()
         {
             // No need to extrapolate if the object is not really grabbed
-            if (grabbable.currentGrabber == null) return;
-            NetworkGrabber networkGrabber = grabbable.currentGrabber.networkGrabber;
+            // if (grabbable.currentGrabber == null) return;
+            // NetworkGrabber networkGrabber = grabbable.currentGrabber.networkGrabber;
 
             // Extrapolation: Make visual representation follow grabber, adding position/rotation offsets
             // We use grabberWhileTakingAuthority instead of CurrentGrabber as we are currently waiting for the authority transfer: the network vars are not already set, so we use the temporary versions
-            var follwedGrabberRoot = networkGrabber.hand != null ? networkGrabber.hand.gameObject : networkGrabber.gameObject;
-            grabbable.Follow(followedTransform: follwedGrabberRoot.transform, grabbable.localPositionOffset, grabbable.localRotationOffset);
+            // var follwedGrabberRoot = networkGrabber.hand != null ? networkGrabber.hand.gameObject : networkGrabber.gameObject;
+            // grabbable.Follow(followedTransform: follwedGrabberRoot.transform, grabbable.localPositionOffset, grabbable.localRotationOffset);
         }
     }
 }

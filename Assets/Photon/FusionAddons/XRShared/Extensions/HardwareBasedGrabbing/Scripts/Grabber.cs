@@ -87,7 +87,7 @@ namespace Fusion.XR.Shared.Grabbing {
 
         public virtual void Grab(Grabbable grabbable)
         {
-            grabbable.Grab(this);
+            // grabbable.Grab(this);
             grabbedObject = grabbable;
         }
 

@@ -1,9 +1,11 @@
+using Fusion;
+using Fusion.XR.Shared;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace Code.Runtime.Logic
 {
-    public class BaseWeapon : MonoBehaviour
+    public class BaseWeapon : NetworkBehaviour
     {
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private Transform spawnPoint;
@@ -21,13 +23,22 @@ namespace Code.Runtime.Logic
         private void OnEnable()
         {
             _xrGrabInteractable.activated.AddListener(Shoot);
+            _xrGrabInteractable.selectEntered.AddListener(Grab);
             xrSocketInteractor.selectEntered.AddListener(SelectObject);
         }
 
         private void OnDisable()
         {
             _xrGrabInteractable.activated.RemoveListener(Shoot);
+            _xrGrabInteractable.selectEntered.RemoveListener(Grab);
             xrSocketInteractor.selectEntered.RemoveListener(SelectObject);
+        }
+
+        private async void Grab(SelectEnterEventArgs arg)
+        {
+            await Object.WaitForStateAuthority();
+
+            Debug.Log(Object.StateAuthority);
         }
 
         private void Shoot(ActivateEventArgs arg)

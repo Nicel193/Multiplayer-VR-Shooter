@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.XR.Interaction.Toolkit;
 
 namespace Fusion.XR.Shared.Grabbing
 {
@@ -10,8 +12,9 @@ namespace Fusion.XR.Shared.Grabbing
     {
         public Vector3 localPositionOffset;
         public Quaternion localRotationOffset;
-        public Grabber currentGrabber;
         public bool expectedIsKinematic = true;
+
+        [SerializeField] private XRGrabInteractable xrGrabInteractable;
 
         [Tooltip("If false, it is only possible to grab a Grabbable previously hovered")]
         public bool allowedClosedHandGrabing = true;
@@ -106,28 +109,37 @@ namespace Fusion.XR.Shared.Grabbing
             }
         }
 
+        private void OnEnable()
+        {
+            xrGrabInteractable.selectEntered.AddListener(Grab);
+        }
+
+        private void OnDisable()
+        {
+            xrGrabInteractable.selectEntered.RemoveListener(Grab);
+        }
+
         protected virtual void Update()
         {
             TrackVelocity();
 
-            if (networkGrabbable == null || networkGrabbable.Object == null)
-            {
-                // We handle the following if we are not online (online, the Follow will be called by the NetworkGrabbable during FUN and Render)
-                if (currentGrabber != null)
-                {
-                    Follow(followedTransform: currentGrabber.transform, localPositionOffset, localRotationOffset);
-                }
-            }
+            // if (networkGrabbable == null || networkGrabbable.Object == null)
+            // {
+            //     // We handle the following if we are not online (online, the Follow will be called by the NetworkGrabbable during FUN and Render)
+            //     if (currentGrabber != null)
+            //     {
+            //         Follow(followedTransform: currentGrabber.transform, localPositionOffset, localRotationOffset);
+            //     }
+            // }
         }
 
-        public virtual void Grab(Grabber newGrabber, Transform grabPointTransform = null)
+        public virtual void Grab(SelectEnterEventArgs arg)
         {
-            if (onWillGrab != null) onWillGrab.Invoke(newGrabber);
-
+            IXRSelectInteractor xrSelectInteractor = arg.interactorObject;
+            
             // Find grabbable position/rotation in grabber referential
-            localPositionOffset = newGrabber.transform.InverseTransformPoint(transform.position);
-            localRotationOffset = Quaternion.Inverse(newGrabber.transform.rotation) * transform.rotation;
-            currentGrabber = newGrabber;
+            localPositionOffset = xrSelectInteractor.transform.InverseTransformPoint(transform.position);
+            localRotationOffset = Quaternion.Inverse(xrSelectInteractor.transform.rotation) * transform.rotation;
 
             if (networkGrabbable)
             {
@@ -143,7 +155,6 @@ namespace Fusion.XR.Shared.Grabbing
 
         public virtual void Ungrab()
         {
-            currentGrabber = null;
             if (networkGrabbable)
             {
                 networkGrabbable.LocalUngrab();
