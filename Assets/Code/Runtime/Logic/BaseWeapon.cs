@@ -36,10 +36,8 @@ namespace Code.Runtime.Logic
             xrSocketInteractor.selectEntered.RemoveListener(SelectObject);
         }
 
-        private async void Grab(SelectEnterEventArgs arg)
+        private void Grab(SelectEnterEventArgs arg)
         {
-            await Object.WaitForStateAuthority();
-
             _interactorObject = arg.interactorObject;
         }
 
