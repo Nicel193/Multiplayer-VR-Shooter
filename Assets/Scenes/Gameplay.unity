@@ -8139,6 +8139,7 @@ GameObject:
   - component: {fileID: 5726957326497337886}
   - component: {fileID: 5726957326497337888}
   - component: {fileID: 5726957326497337890}
+  - component: {fileID: 5726957326497337891}
   - component: {fileID: 5726957326497337889}
   m_Layer: 0
   m_Name: Magazine
@@ -8420,10 +8421,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SortKey: 4260762416
   ObjectInterest: 1
-  Flags: 1
+  Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 5726957326497337890}
+  - {fileID: 5726957326497337891}
 --- !u!114 &5726957326497337890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8446,3 +8448,15 @@ MonoBehaviour:
     Position: 0.01
     Rotation: 0.01
     Scale: 0.01
+--- !u!114 &5726957326497337891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5703913801743507366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8516e1cf37884c2ca4b4dcc0784340f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
