@@ -1,5 +1,6 @@
 using Fusion;
 using Fusion.XR.Shared;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -14,6 +15,7 @@ namespace Code.Runtime.Logic
 
         private XRGrabInteractable _xrGrabInteractable;
         private Magazine _currentMagazine;
+        private IXRSelectInteractor _interactorObject;
 
         private void Awake()
         {
@@ -38,7 +40,15 @@ namespace Code.Runtime.Logic
         {
             await Object.WaitForStateAuthority();
 
-            Debug.Log(Object.StateAuthority);
+            _interactorObject = arg.interactorObject;
+        }
+
+        public override void FixedUpdateNetwork()
+        {
+            if(_interactorObject == null) return;
+
+            transform.position = _interactorObject.transform.position;
+            transform.rotation = _interactorObject.transform.rotation;
         }
 
         private void Shoot(ActivateEventArgs arg)
