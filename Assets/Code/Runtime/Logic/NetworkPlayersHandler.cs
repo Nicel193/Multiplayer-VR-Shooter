@@ -31,9 +31,12 @@ namespace Code.Runtime.Logic
 
         public void PlayerJoined(PlayerRef player)
         {
-            _gameplayStateMachine.Enter<LoadState, PlayerRef>(player);
-            
-            OnPlayerJoined?.Invoke();
+            if (Runner.Topology != Topologies.ClientServer && player == Runner.LocalPlayer)
+            {
+                _gameplayStateMachine.Enter<LoadState, PlayerRef>(player);
+
+                OnPlayerJoined?.Invoke();
+            }
         }
 
         public void PlayerLeft(PlayerRef player)

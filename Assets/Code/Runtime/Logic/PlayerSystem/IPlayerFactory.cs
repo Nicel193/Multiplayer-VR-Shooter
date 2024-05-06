@@ -1,6 +1,6 @@
 using Fusion;
 
-namespace Code.Runtime.Logic
+namespace Code.Runtime.Logic.PlayerSystem
 {
     public interface IPlayerFactory
     {

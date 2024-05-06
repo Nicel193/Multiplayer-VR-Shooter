@@ -1,4 +1,5 @@
 using Fusion;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Code.Runtime.Infrastructure.States.Core
@@ -30,18 +31,11 @@ namespace Code.Runtime.Infrastructure.States.Core
         {
             _networkRunner.ProvideInput = true;
             
-            var scene = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
-            var sceneInfo = new NetworkSceneInfo();
-            if (scene.IsValid)
-            {
-                sceneInfo.AddSceneRef(scene, LoadSceneMode.Additive);
-            }
-            
             await _networkRunner.StartGame(new StartGameArgs()
             {
                 GameMode = _gameMode,
                 SessionName = _sessionName,
-                Scene = scene,
+                Scene = CurrentSceneInfo(),
                 PlayerCount = MaxSessionPlayers,
                 SceneManager = _networkRunner.gameObject.AddComponent<NetworkSceneManagerDefault>()
             });
@@ -50,6 +44,28 @@ namespace Code.Runtime.Infrastructure.States.Core
         public void Exit()
         {
             
+        }
+
+        private NetworkSceneInfo CurrentSceneInfo()
+        {
+            var activeScene = SceneManager.GetActiveScene();
+            SceneRef sceneRef = default;
+
+            if (activeScene.buildIndex < 0 || activeScene.buildIndex >= SceneManager.sceneCountInBuildSettings)
+            {
+                Debug.LogError("Current scene is not part of the build settings");
+            }
+            else
+            {
+                sceneRef = SceneRef.FromIndex(activeScene.buildIndex);
+            }
+
+            var sceneInfo = new NetworkSceneInfo();
+            if (sceneRef.IsValid)
+            {
+                sceneInfo.AddSceneRef(sceneRef, LoadSceneMode.Single);
+            }
+            return sceneInfo;
         }
     }
 }

@@ -7,10 +7,12 @@ namespace Code.Runtime.Logic.PlayerSystem
     public class PlayerView : NetworkBehaviour
     {
         [SerializeField] private XROrigin localXROrigin;
+        
+        private bool IsLocalNetworkRig => Object && Object.HasStateAuthority;
 
         public override void Spawned()
         {
-            if(Runner.LocalPlayer != Object.InputAuthority) return;
+            if(!IsLocalNetworkRig) return;
 
             localXROrigin = FindObjectOfType<XROrigin>();
         }
