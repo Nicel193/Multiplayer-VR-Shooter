@@ -29,18 +29,26 @@ namespace Code.Runtime.Logic
             _gameplayStateMachine = gameplayStateMachine;
         }
 
+        private bool _isSpawned;
+        
         public override void Spawned()
         {
+            _isSpawned = true;
+            
             if(_localPlayer.IsNone) return;
 
             AddPlayerInTeam(_localPlayer);
-            
-            _playerRig.transform.position = GetPlayerSpawnPosition(_localPlayer);
+            MovePlayerInStartPosition();
         }
+
+        public void MovePlayerInStartPosition() =>
+            _playerRig.transform.position = GetPlayerSpawnPosition(_localPlayer);
 
         public void AddPlayer(PlayerRef playerRef)
         {
             _localPlayer = playerRef;
+            
+            if(_isSpawned) Spawned();
         }
 
         private void AddPlayerInTeam(PlayerRef playerRef)

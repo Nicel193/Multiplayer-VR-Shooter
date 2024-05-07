@@ -1,6 +1,7 @@
 using Code.Runtime.Configs;
 using Fusion;
 using UnityEngine;
+using Zenject;
 
 namespace Code.Runtime.Logic.PlayerSystem
 {
@@ -8,9 +9,11 @@ namespace Code.Runtime.Logic.PlayerSystem
     {
         private NetworkRunner _networkRunner;
         private PlayerConfig _playerConfig;
+        private DiContainer _diContainer;
 
-        public PlayerFactory(NetworkRunner networkRunner, PlayerConfig playerConfig)
+        public PlayerFactory(NetworkRunner networkRunner, PlayerConfig playerConfig, DiContainer diContainer)
         {
+            _diContainer = diContainer;
             _playerConfig = playerConfig;
             _networkRunner = networkRunner;
         }
@@ -20,6 +23,8 @@ namespace Code.Runtime.Logic.PlayerSystem
             NetworkPlayer networkPlayer =
                 _networkRunner.Spawn(_playerConfig.NetworkPlayerPrefab, Vector3.zero, Quaternion.identity, playerRef);
 
+            _diContainer.InjectGameObject(networkPlayer.gameObject);
+            
             networkPlayer.GetComponent<PlayerHealth>().Initialize(_playerConfig.MaxPlayerHealth);
             
             return networkPlayer;
