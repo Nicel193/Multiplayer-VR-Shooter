@@ -1,5 +1,6 @@
 using Code.Runtime.Logic.WeaponSystem;
 using Fusion;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -12,7 +13,7 @@ namespace Code.Runtime.Logic.PlayerSystem
         public BaseWeapon PlayerWeapon { get; private set; }
 
         private NetworkPlayerRig _networkPlayerRig;
-        [SerializeField] private PlayerRig _playerRig;
+        private PlayerRig _playerRig;
 
         private void Awake()
         {
@@ -33,6 +34,8 @@ namespace Code.Runtime.Logic.PlayerSystem
 
         public override void Despawned(NetworkRunner runner, bool hasState)
         {
+            if(_playerRig == null) return;
+            
             _playerRig.RightHand.selectEntered.RemoveListener(SelectWeapon);
             _playerRig.RightHand.selectExited.RemoveListener(RemoveWeapon);
         }
