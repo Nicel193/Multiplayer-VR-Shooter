@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Fusion;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -7,13 +6,14 @@ namespace Code.Runtime.Logic.WeaponSystem
 {
     public abstract class BaseWeapon : NetworkBehaviour
     {
+        public Magazine CurrentMagazine { get; private set; }
+        
         [SerializeField] protected Transform SpawnBulletPoint;
         [SerializeField] protected Bullet BulletPrefab;
         [SerializeField] protected int Damage;
         [SerializeField] protected float ShootForce;
         [SerializeField] private XRSocketInteractor magazineSocket;
 
-        private Magazine _currentMagazine;
         private XRGrabInteractable _xrGrabInteractable;
         private IXRSelectInteractor _interactorObject;
         private float _shootInterval;
@@ -40,25 +40,25 @@ namespace Code.Runtime.Logic.WeaponSystem
                 _shootTimer += Runner.DeltaTime;
         }
 
+        protected abstract void ShootImplementation(Vector3 direction);
+
         private void Shoot(ActivateEventArgs arg)
         {
-            if(_currentMagazine == null) return;
+            if(CurrentMagazine == null) return;
             
-            if (_currentMagazine.HasAmmo() && _shootTimer >= _shootInterval)
+            if (CurrentMagazine.HasAmmo() && _shootTimer >= _shootInterval)
             {
                 ShootImplementation(SpawnBulletPoint.forward);
                 
-                _currentMagazine.UseAmmo();
+                CurrentMagazine.UseAmmo();
                 _shootTimer = 0f;
             }
         }
 
-        protected abstract void ShootImplementation(Vector3 direction);
-        
         private void SelectMagazine(SelectEnterEventArgs arg)
         {
             if (arg.interactableObject.transform.TryGetComponent(out Magazine magazine))
-                _currentMagazine = magazine;
+                CurrentMagazine = magazine;
         }
     }
 }

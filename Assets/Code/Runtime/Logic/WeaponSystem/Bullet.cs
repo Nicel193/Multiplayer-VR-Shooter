@@ -42,18 +42,14 @@ namespace Code.Runtime.Logic.WeaponSystem
             _bulletRigidbody.AddForce(direction * force, ForceMode.Impulse);
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnCollisionEnter(Collision other)
         {
-            // if (other.gameObject.TryGetComponent(out IDamageable damageable))
-            // {
-            //     if(damageable.IsDead()) return;
-            //     
-            //     damageable.Damage(_damage);
-            //     
-            //     _onDamage?.Invoke(damageable.IsDead());
-            //
-            //     Runner.Despawn(Object);
-            // }
+            if (other.gameObject.TryGetComponent(out IDamageable damageable))
+            {
+                damageable.RPC_Damage(_damage);
+                
+                Runner.Despawn(Object);
+            }
         }
     }
 }

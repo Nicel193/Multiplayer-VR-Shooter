@@ -1,44 +1,46 @@
+using Code.Runtime.Logic.WeaponSystem;
 using Fusion;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 namespace Code.Runtime.Logic.PlayerSystem
 {
+    [RequireComponent(typeof(NetworkPlayerRig), typeof(PlayerHealth))]
     public class NetworkPlayer : NetworkBehaviour
     {
-        [SerializeField] private Transform leftHand;
-        [SerializeField] private Transform rightHand;
+        public PlayerHealth PlayerHealth { get; private set; }
+        public BaseWeapon PlayerWeapon { get; private set; }
 
+        private NetworkPlayerRig _networkPlayerRig;
         private PlayerRig _playerRig;
-        private Vector3 _leftHandOffset;
-        private Vector3 _rightHandOffset;
 
-        private bool IsLocalNetworkRig => Object && Object.HasInputAuthority;
+        private void Awake()
+        {
+            _networkPlayerRig = GetComponent<NetworkPlayerRig>();
+            PlayerHealth = GetComponent<PlayerHealth>();
+        }
 
         public override void Spawned()
         {
-            if(!IsLocalNetworkRig) return;
+            if(!Object.HasStateAuthority) return;
 
             _playerRig = FindObjectOfType<PlayerRig>();
+            
+            _networkPlayerRig.Initialize(_playerRig);
+            PlayerHealth.Initialize(100);
 
-            _leftHandOffset = leftHand.eulerAngles;
-            _rightHandOffset = rightHand.eulerAngles;
+            _playerRig.RightHand.selectEntered.AddListener(SelectWeapon);
         }
 
-        private void LateUpdate()
+        public override void Despawned(NetworkRunner runner, bool hasState)
         {
-            if(_playerRig == null) return;
+            _playerRig.RightHand.selectEntered.RemoveListener(SelectWeapon);
+        }
 
-            Vector3 xROriginCameraPosition = _playerRig.Camera.transform.position;
-
-            transform.position = new Vector3(xROriginCameraPosition.x, 0f, xROriginCameraPosition.z);
-            
-            leftHand.transform.position = _playerRig.LeftHand.position;
-            leftHand.transform.rotation = _playerRig.LeftHand.rotation;
-            leftHand.transform.eulerAngles += _leftHandOffset;
-
-            rightHand.transform.position = _playerRig.RightHand.position;
-            rightHand.transform.rotation = _playerRig.RightHand.rotation;
-            rightHand.transform.eulerAngles += _rightHandOffset;
+        private void SelectWeapon(SelectEnterEventArgs arg)
+        {
+            if(arg.interactableObject.transform.TryGetComponent(out BaseWeapon baseWeapon))
+                PlayerWeapon = baseWeapon;
         }
     }
 }
