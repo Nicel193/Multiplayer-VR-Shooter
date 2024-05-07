@@ -1,6 +1,6 @@
 using System;
-using Code.Runtime.Logic.PlayerSystem;
 using Code.Runtime.Logic.WeaponSystem;
+using Fusion;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,13 +8,13 @@ using NetworkPlayer = Code.Runtime.Logic.PlayerSystem.NetworkPlayer;
 
 namespace Code.Runtime.UI
 {
-    public class HUD : MonoBehaviour
+    public class HUD : NetworkBehaviour
     {
         [SerializeField] private Image healthImage;
         [SerializeField] private TextMeshProUGUI ammoText;
         [SerializeField] private NetworkPlayer networkPlayer;
 
-        private void Update()
+        public override void FixedUpdateNetwork()
         {
             DisplayHealthText();
             DisplayAmmoText();
