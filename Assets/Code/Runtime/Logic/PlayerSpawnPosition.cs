@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Code.Runtime.Logic
 {
-    public class PlayerSpawner : MonoBehaviour
+    public class PlayerSpawnPosition : MonoBehaviour
     {
         [field: SerializeField] public float Radius { get; private set; }
 

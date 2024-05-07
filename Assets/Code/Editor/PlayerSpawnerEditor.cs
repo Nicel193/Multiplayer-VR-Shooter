@@ -4,15 +4,14 @@ using UnityEngine;
 
 namespace Code.Editor
 {
-    [CustomEditor(typeof(PlayerSpawner))]
+    [CustomEditor(typeof(PlayerSpawnPosition))]
     public class PlayerSpawnerEditor : UnityEditor.Editor
     {
-        void OnSceneGUI()
+        [DrawGizmo(GizmoType.Active | GizmoType.Pickable | GizmoType.NonSelected)]
+        public static void DrawCustomGizmo(PlayerSpawnPosition playerSpawnPosition, GizmoType gizmoType)
         {
-            PlayerSpawner playerSpawner = (PlayerSpawner) target;
-
-            Handles.color = Color.green;
-            Handles.DrawWireDisc(playerSpawner.transform.position, new Vector3(0, 1, 0), playerSpawner.Radius);
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(playerSpawnPosition.transform.position, playerSpawnPosition.Radius);
         }
     }
 }

@@ -7,8 +7,8 @@ namespace Code.Runtime.Logic
 {
     public class NetworkPlayersHandler : NetworkBehaviour, INetworkPlayersHandler
     {
-        [SerializeField] private PlayerSpawner redTeamSpawn;
-        [SerializeField] private PlayerSpawner blueTeamSpawn;
+        [SerializeField] private PlayerSpawnPosition redTeamSpawn;
+        [SerializeField] private PlayerSpawnPosition blueTeamSpawn;
         
         [Networked, Capacity(2)]
         private NetworkDictionary<PlayerRef, Team> TeamsPlayers => default;
