@@ -1,6 +1,7 @@
 using Code.Runtime.Infrastructure.StateMachines;
 using Code.Runtime.Logic.PlayerSystem;
 using Fusion;
+using Fusion.XR.Shared;
 using UnityEngine;
 using Zenject;
 
@@ -29,16 +30,25 @@ namespace Code.Runtime.Logic
 
         public override void Spawned()
         {
-            Team teamColor = TeamsPlayers.Count % 2 == 0 ? Team.Blue : Team.Red;
-            
-            TeamsPlayers.Add(_localPlayer, teamColor);
-            
-            _playerRig.transform.position = GetPlayerSpawnPosition(_localPlayer);
+            // Team teamColor = TeamsPlayers.Count % 2 == 0 ? Team.Blue : Team.Red;
+            //
+            // TeamsPlayers.Add(_localPlayer, teamColor);
+            //
+            // _playerRig.transform.position = GetPlayerSpawnPosition(_localPlayer);
         }
 
-        public void AddPlayerInTeam(PlayerRef playerRef)
+        public async void AddPlayerInTeam(PlayerRef playerRef)
         {
+            await Object.WaitForStateAuthority();
+            
             _localPlayer = playerRef;
+
+            Team teamColor = TeamsPlayers.Count % 2 == 0 ? Team.Blue : Team.Red;
+
+            TeamsPlayers.Add(_localPlayer, teamColor);
+
+
+            _playerRig.transform.position = GetPlayerSpawnPosition(_localPlayer);
         }
 
         public Vector3 GetPlayerSpawnPosition(PlayerRef playerRef)
