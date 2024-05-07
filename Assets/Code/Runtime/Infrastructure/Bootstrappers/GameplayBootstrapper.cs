@@ -1,6 +1,7 @@
 using Code.Runtime.Infrastructure.StateMachines;
 using Code.Runtime.Infrastructure.States;
 using Code.Runtime.Infrastructure.States.Gameplay;
+using Fusion.Addons.ConnectionManagerAddon;
 using UnityEngine;
 using Zenject;
 
@@ -8,14 +9,19 @@ namespace Code.Runtime.Infrastructure.Bootstrappers
 {
     public class GameplayBootstrapper : MonoBehaviour
     {
+        [SerializeField] private ConnectionManager connectionManager;
+        
         [Inject] private GameplayStateMachine _gameplayStateMachine;
         [Inject] private IStatesFactory _statesFactory;
         [Inject] private ISceneLoader _sceneLoader;
 
         private void Awake()
         {
-            if (_sceneLoader.IsNameLoadedScene(SceneName.Gameplay.ToString()))
-                AddGameplayStates();
+            if (!_sceneLoader.IsNameLoadedScene(SceneName.Gameplay.ToString())) return;
+            
+            AddGameplayStates();
+            
+            connectionManager.StartConnection();
         }
 
         private void Update() =>

@@ -26,7 +26,7 @@ namespace Code.Runtime.Installers
 
             BindInteractorContainer();
 
-            BindNetworkRunner();
+            // BindNetworkRunner();
         }
 
         private void BindNetworkRunner()

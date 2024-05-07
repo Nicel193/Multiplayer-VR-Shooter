@@ -26,12 +26,14 @@ namespace Code.Runtime.Logic.WeaponSystem
         {
             _xrGrabInteractable.activated.AddListener(Shoot);
             magazineSocket.selectEntered.AddListener(SelectMagazine);
+            magazineSocket.selectExited.AddListener(RemoveMagazine);
         }
 
         private void OnDisable()
         {
             _xrGrabInteractable.activated.RemoveListener(Shoot);
             magazineSocket.selectEntered.RemoveListener(SelectMagazine);
+            magazineSocket.selectExited.RemoveListener(RemoveMagazine);
         }
 
         public override void FixedUpdateNetwork()
@@ -60,5 +62,8 @@ namespace Code.Runtime.Logic.WeaponSystem
             if (arg.interactableObject.transform.TryGetComponent(out Magazine magazine))
                 CurrentMagazine = magazine;
         }
+
+        private void RemoveMagazine(SelectExitEventArgs arg) =>
+            CurrentMagazine = null;
     }
 }

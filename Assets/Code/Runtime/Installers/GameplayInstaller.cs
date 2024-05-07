@@ -2,12 +2,18 @@ using Code.Runtime.Infrastructure;
 using Code.Runtime.Infrastructure.StateMachines;
 using Code.Runtime.Logic;
 using Code.Runtime.Logic.PlayerSystem;
+using Fusion;
+using UnityEngine;
 using Zenject;
 
 namespace Code.Runtime.Installers
 {
     public class GameplayInstaller : MonoInstaller
     {
+        [SerializeField] private NetworkRunner networkRunner;
+        [SerializeField] private NetworkPlayersHandler networkPlayersHandler;
+        [SerializeField] private PlayerRig playerRig;
+        
         public override void InstallBindings()
         {
             BindGameplayBootstrapper();
@@ -15,6 +21,20 @@ namespace Code.Runtime.Installers
             BindStatesFactory();
 
             BindPlayerFactory();
+
+            BindNetworkPlayersHandler();
+            
+            Container.BindInstance(networkRunner);
+            
+            Container.BindInstance(playerRig);
+        }
+
+        private void BindNetworkPlayersHandler()
+        {
+            Container
+                .BindInterfacesTo<NetworkPlayersHandler>()
+                .FromInstance(networkPlayersHandler)
+                .AsSingle();
         }
 
         private void BindPlayerFactory()

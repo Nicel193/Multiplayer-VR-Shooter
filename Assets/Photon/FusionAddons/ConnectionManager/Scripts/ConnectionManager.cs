@@ -2,9 +2,12 @@ using Fusion.Sockets;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Code.Runtime.Infrastructure.StateMachines;
+using Code.Runtime.Infrastructure.States.Gameplay;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace Fusion.Addons.ConnectionManagerAddon
 {
@@ -38,8 +41,6 @@ namespace Fusion.Addons.ConnectionManagerAddon
         public GameMode gameMode = GameMode.Shared;
         public string roomName = "SampleFusion";
         public bool connectOnStart = true;
-        [Tooltip("Set it to 0 to use the DefaultPlayers value, from the Global NetworkProjectConfig (simulation section)")]
-        public int playerCount = 0;
 
         [Header("Room selection criteria")]
         public ConnectionCriterias connectionCriterias = ConnectionCriterias.RoomName;
@@ -70,6 +71,7 @@ namespace Fusion.Addons.ConnectionManagerAddon
 
         // Dictionary of spawned user prefabs, to store them on the server for host topology, and destroy them on disconnection (for shared topology, use Network Objects's "Destroy When State Authority Leaves" option)
         private Dictionary<PlayerRef, NetworkObject> _spawnedUsers = new Dictionary<PlayerRef, NetworkObject>();
+        private GameplayStateMachine _gameplayStateMachine;
 
         bool ShouldConnectWithRoomName => (connectionCriterias & ConnectionManager.ConnectionCriterias.RoomName) != 0;
         bool ShouldConnectWithSessionProperties => (connectionCriterias & ConnectionManager.ConnectionCriterias.SessionProperties) != 0;
@@ -84,7 +86,7 @@ namespace Fusion.Addons.ConnectionManagerAddon
             runner.ProvideInput = true;
         }
 
-        private async void Start()
+        public async void StartConnection()
         {
             if (runner && new List<NetworkRunner>(GetComponentsInParent<NetworkRunner>()).Contains(runner) == false)
             {
@@ -146,18 +148,15 @@ namespace Fusion.Addons.ConnectionManagerAddon
 
         public async Task Connect()
         {
-            // Create the scene manager if it does not exist
             if (sceneManager == null) sceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>();
             if (onWillConnect != null) onWillConnect.Invoke();
-
-            // Start or join (depends on gamemode) a session with a specific name
+            
             var args = new StartGameArgs()
             {
                 GameMode = gameMode,
                 Scene = CurrentSceneInfo(),
                 SceneManager = sceneManager
             };
-            // Connection criteria
             if (ShouldConnectWithRoomName)
             {
                 args.SessionName = roomName;
@@ -165,11 +164,6 @@ namespace Fusion.Addons.ConnectionManagerAddon
             if (ShouldConnectWithSessionProperties)
             {
                 args.SessionProperties = AllConnectionSessionProperties;
-            }
-            // Room details
-            if (playerCount > 0)
-            {
-                args.PlayerCount = playerCount;
             }
 
             await runner.StartGame(args);
@@ -187,30 +181,30 @@ namespace Fusion.Addons.ConnectionManagerAddon
             }
         }
 
+        [Inject]
+        private void Construct(GameplayStateMachine gameplayStateMachine)
+        {
+            _gameplayStateMachine = gameplayStateMachine;
+        }
+
 #region Player spawn
         public void OnPlayerJoinedSharedMode(NetworkRunner runner, PlayerRef player)
         {
             if (player == runner.LocalPlayer && userPrefab != null)
             {
-                // Spawn the user prefab for the local user
-                NetworkObject networkPlayerObject = runner.Spawn(userPrefab, position: transform.position, rotation: transform.rotation, player, (runner, obj) => {
-                });
-
-                Debug.Log("Player created: " + player.PlayerId);
+                _gameplayStateMachine.Enter<LoadState, PlayerRef>(player);
             }
         }
 
         public void OnPlayerJoinedHostMode(NetworkRunner runner, PlayerRef player)
         {
-            // The user's prefab has to be spawned by the host
             if (runner.IsServer && userPrefab != null)
             {
                 Debug.Log($"OnPlayerJoined. PlayerId: {player.PlayerId}");
-                // We make sure to give the input authority to the connecting player for their user's object
+
                 NetworkObject networkPlayerObject = runner.Spawn(userPrefab, position: transform.position, rotation: transform.rotation, inputAuthority: player, (runner, obj) => {
                 });
-
-                // Keep track of the player avatars so we can remove it when they disconnect
+                
                 _spawnedUsers.Add(player, networkPlayerObject);
             }
         }

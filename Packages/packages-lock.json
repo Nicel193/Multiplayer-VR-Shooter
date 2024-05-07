@@ -7,28 +7,11 @@
       "dependencies": {},
       "hash": "f8c8347af3a144069dffd6120f1c4142f8120891"
     },
-    "com.meta.xr.sdk.core": {
-      "version": "64.0.0",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
     "com.meta.xr.simulator": {
-      "version": "64.0.0",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
-    "com.meta.xr.simulator.samples": {
       "version": "64.0.0",
       "depth": 0,
       "source": "registry",
-      "dependencies": {
-        "com.meta.xr.sdk.core": "64.0.0",
-        "com.meta.xr.simulator": "64.0.0"
-      },
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.collab-proxy": {

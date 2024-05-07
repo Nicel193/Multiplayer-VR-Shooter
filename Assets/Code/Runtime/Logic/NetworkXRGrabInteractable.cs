@@ -21,6 +21,8 @@ namespace Code.Runtime.Logic
 
         private void Grab(SelectEnterEventArgs arg)
         {
+            if(Object == null) return;
+
             Object.RequestStateAuthority();
         }
     }

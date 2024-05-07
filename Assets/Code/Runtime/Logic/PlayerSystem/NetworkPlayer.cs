@@ -27,14 +27,14 @@ namespace Code.Runtime.Logic.PlayerSystem
             _playerRig = FindObjectOfType<PlayerRig>();
             
             _networkPlayerRig.Initialize(_playerRig);
-            PlayerHealth.Initialize(100);
-
             _playerRig.RightHand.selectEntered.AddListener(SelectWeapon);
+            _playerRig.RightHand.selectExited.AddListener(RemoveWeapon);
         }
 
         public override void Despawned(NetworkRunner runner, bool hasState)
         {
             _playerRig.RightHand.selectEntered.RemoveListener(SelectWeapon);
+            _playerRig.RightHand.selectExited.RemoveListener(RemoveWeapon);
         }
 
         private void SelectWeapon(SelectEnterEventArgs arg)
@@ -42,5 +42,8 @@ namespace Code.Runtime.Logic.PlayerSystem
             if(arg.interactableObject.transform.TryGetComponent(out BaseWeapon baseWeapon))
                 PlayerWeapon = baseWeapon;
         }
+
+        private void RemoveWeapon(SelectExitEventArgs arg0) =>
+            PlayerWeapon = null;
     }
 }

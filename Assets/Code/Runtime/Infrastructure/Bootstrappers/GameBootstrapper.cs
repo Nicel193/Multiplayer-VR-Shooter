@@ -17,7 +17,7 @@ namespace Code.Runtime.Infrastructure.Bootstrappers
             _gameStateMachine.RegisterState(_statesFactory.Create<BootstrapState>());
             _gameStateMachine.RegisterState(_statesFactory.Create<LoadProgressState>());
             _gameStateMachine.RegisterState(_statesFactory.Create<LoadSceneState>());
-            _gameStateMachine.RegisterState(_statesFactory.Create<LoadGameplayState>());
+            // _gameStateMachine.RegisterState(_statesFactory.Create<LoadGameplayState>());
             
             _gameStateMachine.Enter<BootstrapState>();
         }

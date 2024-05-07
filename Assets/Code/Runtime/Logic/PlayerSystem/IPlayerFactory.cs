@@ -4,6 +4,6 @@ namespace Code.Runtime.Logic.PlayerSystem
 {
     public interface IPlayerFactory
     {
-        void CreatePlayer(PlayerRef playerRef);
+        NetworkPlayer CreatePlayer(PlayerRef playerRef);
     }
 }
