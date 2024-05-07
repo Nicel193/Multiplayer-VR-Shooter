@@ -22,8 +22,6 @@ namespace Code.Runtime.Infrastructure.States.Gameplay
         {
             _playerFactory.CreatePlayer(playerRef);
             _networkPlayersHandler.AddPlayerInTeam(playerRef);
-
-            _playerRig.transform.position = _networkPlayersHandler.GetPlayerSpawnPosition(playerRef);
         }
 
         public void Exit()
