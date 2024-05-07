@@ -12,7 +12,7 @@ namespace Code.Runtime.Logic.PlayerSystem
         public BaseWeapon PlayerWeapon { get; private set; }
 
         private NetworkPlayerRig _networkPlayerRig;
-        private PlayerRig _playerRig;
+        [SerializeField] private PlayerRig _playerRig;
 
         private void Awake()
         {
