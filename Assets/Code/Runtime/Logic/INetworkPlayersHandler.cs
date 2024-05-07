@@ -8,5 +8,6 @@ namespace Code.Runtime.Logic
     {
         void AddPlayer(PlayerRef playerRef);
         void MovePlayerInStartPosition();
+        void RemovePlayer(PlayerRef playerRef);
     }
 }

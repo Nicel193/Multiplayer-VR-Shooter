@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Code.Runtime.Infrastructure.StateMachines;
 using Code.Runtime.Infrastructure.States.Gameplay;
+using Code.Runtime.Logic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -72,6 +73,7 @@ namespace Fusion.Addons.ConnectionManagerAddon
         // Dictionary of spawned user prefabs, to store them on the server for host topology, and destroy them on disconnection (for shared topology, use Network Objects's "Destroy When State Authority Leaves" option)
         private Dictionary<PlayerRef, NetworkObject> _spawnedUsers = new Dictionary<PlayerRef, NetworkObject>();
         private GameplayStateMachine _gameplayStateMachine;
+        private INetworkPlayersHandler _networkPlayersHandler;
 
         bool ShouldConnectWithRoomName => (connectionCriterias & ConnectionManager.ConnectionCriterias.RoomName) != 0;
         bool ShouldConnectWithSessionProperties => (connectionCriterias & ConnectionManager.ConnectionCriterias.SessionProperties) != 0;
@@ -84,6 +86,12 @@ namespace Fusion.Addons.ConnectionManagerAddon
             // Create the Fusion runner and let it know that we will be providing user input
             if (runner == null) runner = gameObject.AddComponent<NetworkRunner>();
             runner.ProvideInput = true;
+        }
+
+        [Inject]
+        private void Construct(INetworkPlayersHandler networkPlayersHandler)
+        {
+            _networkPlayersHandler = networkPlayersHandler;
         }
 
         public async void StartConnection()
@@ -235,6 +243,8 @@ namespace Fusion.Addons.ConnectionManagerAddon
             }
         }
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) {
+            _networkPlayersHandler.RemovePlayer(player);
+            
             if (runner.Topology == Topologies.ClientServer)
             {
                 OnPlayerLeftHostMode(runner, player);

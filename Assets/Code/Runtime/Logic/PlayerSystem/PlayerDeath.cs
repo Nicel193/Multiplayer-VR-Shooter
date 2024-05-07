@@ -1,10 +1,11 @@
+using Fusion;
 using UnityEngine;
 using Zenject;
 
 namespace Code.Runtime.Logic.PlayerSystem
 {
     [RequireComponent(typeof(PlayerHealth))]
-    public class PlayerDeath : MonoBehaviour
+    public class PlayerDeath : NetworkBehaviour
     {
         private PlayerHealth _playerHealth;
         private INetworkPlayersHandler _networkPlayersHandler;
@@ -26,6 +27,8 @@ namespace Code.Runtime.Logic.PlayerSystem
 
         private void OnDeath()
         {
+            if(!Object.HasStateAuthority) return;
+            
             _playerHealth.RPC_ResumeHealth();
             _networkPlayersHandler.MovePlayerInStartPosition();
         }

@@ -1,8 +1,8 @@
+using System.Linq;
 using Code.Runtime.Infrastructure.StateMachines;
+using Code.Runtime.Infrastructure.States.Gameplay;
 using Code.Runtime.Logic.PlayerSystem;
-using ExitGames.Client.Photon;
 using Fusion;
-using Fusion.XR.Shared;
 using UnityEngine;
 using Zenject;
 
@@ -16,21 +16,18 @@ namespace Code.Runtime.Logic
         [Networked, Capacity(10)]
         private NetworkDictionary<PlayerRef, Team> TeamsPlayers => default;
 
-        private GameplayStateMachine _gameplayStateMachine;
-        private NetworkRunner _networkRunner;
         private PlayerRef _localPlayer;
         private PlayerRig _playerRig;
+        private bool _isSpawned;
+        private GameplayStateMachine _gameplayStateMachine;
 
         [Inject]
-        private void Construct(GameplayStateMachine gameplayStateMachine, NetworkRunner networkRunner, PlayerRig playerRig)
+        private void Construct(PlayerRig playerRig, GameplayStateMachine gameplayStateMachine)
         {
-            _playerRig = playerRig;
-            _networkRunner = networkRunner;
             _gameplayStateMachine = gameplayStateMachine;
+            _playerRig = playerRig;
         }
 
-        private bool _isSpawned;
-        
         public override void Spawned()
         {
             _isSpawned = true;
@@ -41,14 +38,32 @@ namespace Code.Runtime.Logic
             MovePlayerInStartPosition();
         }
 
-        public void MovePlayerInStartPosition() =>
+        public void MovePlayerInStartPosition()
+        {
             _playerRig.transform.position = GetPlayerSpawnPosition(_localPlayer);
+        }
 
         public void AddPlayer(PlayerRef playerRef)
         {
             _localPlayer = playerRef;
             
             if(_isSpawned) Spawned();
+        }
+
+        public void RemovePlayer(PlayerRef playerRef)
+        {
+            if(TeamsPlayers.ContainsKey(playerRef))
+            {
+                TeamsPlayers.Remove(playerRef);
+
+                Team winTeam = TeamsPlayers
+                    .Take(1)
+                    .Select(d => d.Value)
+                    .First();
+
+                if (TeamsPlayers.Count == 1)
+                    _gameplayStateMachine.Enter<EndGameState, Team>(winTeam);
+            }
         }
 
         private void AddPlayerInTeam(PlayerRef playerRef)
