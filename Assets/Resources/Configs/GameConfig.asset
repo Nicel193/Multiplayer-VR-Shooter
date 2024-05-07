@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b91c23f10c2e4c588ee31d11595728f0, type: 3}
-  m_Name: CoreConfig
+  m_Script: {fileID: 11500000, guid: 0624e7d6066b414ca14168af73375474, type: 3}
+  m_Name: GameConfig
   m_EditorClassIdentifier: 
-  playerConfig: {fileID: 11400000, guid: a6bbdd90d0d98e24a91ca492789b91e9, type: 2}
-  gameConfig: {fileID: 11400000, guid: 5f3f1a11ea0193d4880332d77f599781, type: 2}
+  <WarmUpTime>k__BackingField: 5
+  <MatchTime>k__BackingField: 10
