@@ -1,5 +1,6 @@
 using Code.Runtime.Infrastructure.StateMachines;
 using Code.Runtime.Logic.PlayerSystem;
+using ExitGames.Client.Photon;
 using Fusion;
 using Fusion.XR.Shared;
 using UnityEngine;
@@ -30,28 +31,26 @@ namespace Code.Runtime.Logic
 
         public override void Spawned()
         {
-            // Team teamColor = TeamsPlayers.Count % 2 == 0 ? Team.Blue : Team.Red;
-            //
-            // TeamsPlayers.Add(_localPlayer, teamColor);
-            //
-            // _playerRig.transform.position = GetPlayerSpawnPosition(_localPlayer);
-        }
+            if(_localPlayer.IsNone) return;
 
-        public async void AddPlayerInTeam(PlayerRef playerRef)
-        {
-            await Object.WaitForStateAuthority();
+            AddPlayerInTeam(_localPlayer);
             
-            _localPlayer = playerRef;
-
-            Team teamColor = TeamsPlayers.Count % 2 == 0 ? Team.Blue : Team.Red;
-
-            TeamsPlayers.Add(_localPlayer, teamColor);
-
-
             _playerRig.transform.position = GetPlayerSpawnPosition(_localPlayer);
         }
 
-        public Vector3 GetPlayerSpawnPosition(PlayerRef playerRef)
+        public void AddPlayer(PlayerRef playerRef)
+        {
+            _localPlayer = playerRef;
+        }
+
+        private void AddPlayerInTeam(PlayerRef playerRef)
+        {
+            Team teamColor = TeamsPlayers.Count % 2 == 0 ? Team.Blue : Team.Red;
+            
+            TeamsPlayers.Add(playerRef, teamColor);
+        }
+
+        private Vector3 GetPlayerSpawnPosition(PlayerRef playerRef)
         {
             Team teamColor = TeamsPlayers[playerRef];
 

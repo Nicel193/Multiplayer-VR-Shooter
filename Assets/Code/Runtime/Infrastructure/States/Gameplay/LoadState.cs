@@ -9,11 +9,9 @@ namespace Code.Runtime.Infrastructure.States.Gameplay
     {
         private IPlayerFactory _playerFactory;
         private INetworkPlayersHandler _networkPlayersHandler;
-        private PlayerRig _playerRig;
-
-        private LoadState(IPlayerFactory playerFactory, INetworkPlayersHandler networkPlayersHandler, PlayerRig playerRig)
+        
+        private LoadState(IPlayerFactory playerFactory, INetworkPlayersHandler networkPlayersHandler)
         {
-            _playerRig = playerRig;
             _networkPlayersHandler = networkPlayersHandler;
             _playerFactory = playerFactory;
         }
@@ -21,7 +19,7 @@ namespace Code.Runtime.Infrastructure.States.Gameplay
         public void Enter(PlayerRef playerRef)
         {
             _playerFactory.CreatePlayer(playerRef);
-            _networkPlayersHandler.AddPlayerInTeam(playerRef);
+            _networkPlayersHandler.AddPlayer(playerRef);
         }
 
         public void Exit()
