@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using Code.Runtime.Infrastructure.StateMachines;
 using Code.Runtime.Infrastructure.States.Gameplay;
 using Code.Runtime.Logic.PlayerSystem;
@@ -27,27 +28,20 @@ namespace Code.Runtime.Logic
             _gameplayStateMachine = gameplayStateMachine;
             _playerRig = playerRig;
         }
-
-        public override void Spawned()
-        {
-            _isSpawned = true;
-            
-            if(_localPlayer.IsNone) return;
-
-            AddPlayerInTeam(_localPlayer);
-            MovePlayerInStartPosition();
-        }
-
+        
         public void MovePlayerInStartPosition()
         {
             _playerRig.transform.position = GetPlayerSpawnPosition(_localPlayer);
         }
 
-        public void AddPlayer(PlayerRef playerRef)
+        public async void AddPlayer(PlayerRef playerRef)
         {
+            await Object.WaitObjectSpawned();
+
             _localPlayer = playerRef;
             
-            if(_isSpawned) Spawned();
+            AddPlayerInTeam(_localPlayer);
+            MovePlayerInStartPosition();
         }
 
         public void RemovePlayer(PlayerRef playerRef)
