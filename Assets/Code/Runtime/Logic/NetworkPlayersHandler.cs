@@ -3,16 +3,17 @@ using System.Linq;
 using Code.Runtime.Infrastructure.StateMachines;
 using Code.Runtime.Infrastructure.States.Gameplay;
 using Code.Runtime.Logic.PlayerSystem;
-using Code.Runtime.Service;
-using Code.Runtime.UI.Windows;
 using Fusion;
 using UnityEngine;
 using Zenject;
+using NetworkPlayer = Code.Runtime.Logic.PlayerSystem.NetworkPlayer;
 
 namespace Code.Runtime.Logic
 {
     public class NetworkPlayersHandler : NetworkBehaviour, INetworkPlayersHandler
     {
+        public INetworkPlayer LocalNetworkPlayer { get; private set; }
+
         [SerializeField] private PlayerSpawnPosition redTeamSpawn;
         [SerializeField] private PlayerSpawnPosition blueTeamSpawn;
         
@@ -22,14 +23,11 @@ namespace Code.Runtime.Logic
         
         private PlayerRig _playerRig;
         private GameplayStateMachine _gameplayStateMachine;
-        private bool _isAddedLocalPlayer;
         private bool _isSpawned;
-        private IWindowService _windowService;
 
         [Inject]
-        private void Construct(PlayerRig playerRig, GameplayStateMachine gameplayStateMachine, IWindowService windowService)
+        private void Construct(PlayerRig playerRig, GameplayStateMachine gameplayStateMachine)
         {
-            _windowService = windowService;
             _gameplayStateMachine = gameplayStateMachine;
             _playerRig = playerRig;
         }
@@ -39,13 +37,18 @@ namespace Code.Runtime.Logic
             _playerRig.transform.position = GetPlayerSpawnPosition(playerRef);
         }
         
-        public async void AddPlayer(PlayerRef playerRef)
+        public async void AddPlayer(PlayerRef playerRef, INetworkPlayer networkPlayer)
         {
             await Runner.WaitObjectSpawned();
             
-            _windowService.OpenPayloadWindow<EndGameWindow, Team>(Team.Red);
-
             RPC_AddPlayer(playerRef);
+            
+            if (LocalNetworkPlayer == null)
+            {
+                MovePlayerInStartPosition(playerRef);
+
+                LocalNetworkPlayer = networkPlayer;
+            }
         }
 
         [Rpc]
@@ -53,13 +56,6 @@ namespace Code.Runtime.Logic
         {
             AddPlayerInTeam(playerRef);
             InitializeLocalTeamsPlayers();
-            
-            if (!_isAddedLocalPlayer)
-            {
-                MovePlayerInStartPosition(playerRef);
-
-                _isAddedLocalPlayer = true;
-            }
         }
 
         private void InitializeLocalTeamsPlayers()

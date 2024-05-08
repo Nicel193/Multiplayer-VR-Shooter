@@ -2600,6 +2600,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Windows",
+            "id": "a29232f6-df86-491e-b56e-3998d25227d3",
+            "actions": [
+                {
+                    "name": "OpenGameStatsWindow",
+                    "type": "Button",
+                    "id": "370abe1d-01a1-4aa2-a21f-1a3a5445f66f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d39932a1-0206-49b9-afc1-d6e7e7cda3a7",
+                    "path": "<XRController>{LeftHand}/trackpadDpadRight",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenGameStatsWindow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

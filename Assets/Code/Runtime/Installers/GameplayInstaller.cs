@@ -15,6 +15,7 @@ namespace Code.Runtime.Installers
         [SerializeField] private NetworkRunner networkRunner;
         [SerializeField] private NetworkPlayersHandler networkPlayersHandler;
         [SerializeField] private PlayerRig playerRig;
+        [SerializeField] private GameTime gameTime;
         
         public override void InstallBindings()
         {
@@ -29,10 +30,20 @@ namespace Code.Runtime.Installers
             BindWindowFactory();
 
             BindWindowService();
+
+            BindGameTime();
             
             Container.BindInstance(networkRunner);
             
             Container.BindInstance(playerRig);
+        }
+
+        private void BindGameTime()
+        {
+            Container
+                .BindInterfacesTo<GameTime>()
+                .FromInstance(gameTime)
+                .AsSingle();
         }
 
         private void BindWindowService()

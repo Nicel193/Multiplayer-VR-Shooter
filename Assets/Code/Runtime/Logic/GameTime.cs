@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Code.Runtime.Logic
 {
-    public class GameTime : NetworkBehaviour
+    public class GameTime : NetworkBehaviour, IGameTime
     {
         [Networked] private TickTimer GameTimer { get; set; }
         [Networked] private GameTimeState CurrentGameTimeState { get; set; }
@@ -49,6 +49,11 @@ namespace Code.Runtime.Logic
                         break;
                 }
             }
+        }
+
+        public float? GetTimeToEnd()
+        {
+            return GameTimer.RemainingTime(Runner);
         }
         
         private enum GameTimeState

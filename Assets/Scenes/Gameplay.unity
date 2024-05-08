@@ -4177,6 +4177,7 @@ MonoBehaviour:
   networkRunner: {fileID: 1421894979}
   networkPlayersHandler: {fileID: 1720405321}
   playerRig: {fileID: 1941385559}
+  gameTime: {fileID: 1824563926}
 --- !u!4 &1205694222
 Transform:
   m_ObjectHideFlags: 0

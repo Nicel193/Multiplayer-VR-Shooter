@@ -1,11 +1,14 @@
+using Code.Runtime.Logic.PlayerSystem;
 using Fusion;
 
 namespace Code.Runtime.Logic
 {
     public interface INetworkPlayersHandler
     {
-        void AddPlayer(PlayerRef playerRef);
+        INetworkPlayer LocalNetworkPlayer { get; }
         
+        void AddPlayer(PlayerRef playerRef, INetworkPlayer networkPlayer);
+
         void RemovePlayer(PlayerRef playerRef);
 
         void MovePlayerInStartPosition(PlayerRef playerRef);
