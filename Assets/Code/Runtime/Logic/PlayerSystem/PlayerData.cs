@@ -13,7 +13,7 @@ namespace Code.Runtime.Logic.PlayerSystem
         [HideInInspector, Networked] public int Health { get; private set; }
         [HideInInspector, Networked] public int Kills { get; private set; }
 
-        private bool _isPlayerDead;
+        [Networked] private bool IsPlayerDead { get; set; }
 
         public void Initialize(int maxHealth)
         {
@@ -31,7 +31,7 @@ namespace Code.Runtime.Logic.PlayerSystem
         [Rpc]
         public void RPC_Damage(int damage)
         {
-            if(damage <= 0 || _isPlayerDead) return;
+            if(damage <= 0 || IsPlayerDead) return;
             
             Health -= damage;
 
@@ -41,7 +41,7 @@ namespace Code.Runtime.Logic.PlayerSystem
             {
                 OnPlayerDead?.Invoke();
                 
-                _isPlayerDead = true;
+                IsPlayerDead = true;
             }
         }
 
@@ -50,10 +50,10 @@ namespace Code.Runtime.Logic.PlayerSystem
         {
             Health = MAXHealth;
 
-            _isPlayerDead = false;
+            IsPlayerDead = false;
         }
 
         public bool IsDead() =>
-            _isPlayerDead;
+            IsPlayerDead;
     }
 }
