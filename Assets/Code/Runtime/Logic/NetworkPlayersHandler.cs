@@ -42,12 +42,14 @@ namespace Code.Runtime.Logic
         [Rpc]
         private void RPC_AddPlayer(PlayerRef playerRef)
         {
-            if (_isAddedLocalPlayer) return;
-
             AddPlayerInTeam(playerRef);
-            MovePlayerInStartPosition(playerRef);
+            
+            if (!_isAddedLocalPlayer)
+            {
+                MovePlayerInStartPosition(playerRef);
 
-            _isAddedLocalPlayer = true;
+                _isAddedLocalPlayer = true;
+            }
         }
         
         [Rpc]
