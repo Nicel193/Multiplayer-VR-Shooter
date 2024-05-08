@@ -6,6 +6,7 @@ using Code.Runtime.Infrastructure.States.Gameplay;
 using Code.Runtime.Logic.PlayerSystem;
 using Fusion;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using Zenject;
 
 namespace Code.Runtime.Logic
@@ -15,8 +16,9 @@ namespace Code.Runtime.Logic
         [SerializeField] private PlayerSpawnPosition redTeamSpawn;
         [SerializeField] private PlayerSpawnPosition blueTeamSpawn;
         
-        // [Networked, Capacity(10)]
-        private Dictionary<PlayerRef, Team> TeamsPlayers = new Dictionary<PlayerRef, Team>();
+        [Networked, Capacity(10)]
+        private NetworkDictionary<PlayerRef, Team> TeamsPlayers => default;
+        private Dictionary<PlayerRef, Team> LocalTeamsPlayers;
         
         private PlayerRig _playerRig;
         private GameplayStateMachine _gameplayStateMachine;
@@ -46,6 +48,8 @@ namespace Code.Runtime.Logic
         private void RPC_AddPlayer(PlayerRef playerRef)
         {
             AddPlayerInTeam(playerRef);
+
+            LocalTeamsPlayers = TeamsPlayers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             
             if (!_isAddedLocalPlayer)
             {
@@ -55,25 +59,18 @@ namespace Code.Runtime.Logic
             }
         }
 
-        public override void Spawned()
-        {
-            _isSpawned = true;
-        }
-
         public void RemovePlayer(PlayerRef playerRef)
         {
-            Debug.Log(_isSpawned);
-            
-            if(TeamsPlayers.ContainsKey(playerRef))
+            if(LocalTeamsPlayers.ContainsKey(playerRef))
             {
-                TeamsPlayers.Remove(playerRef);
+                LocalTeamsPlayers.Remove(playerRef);
 
-                Team winTeam = TeamsPlayers
+                Team winTeam = LocalTeamsPlayers
                     .Take(1)
                     .Select(d => d.Value)
                     .First();
 
-                if (TeamsPlayers.Count == 1)
+                if (LocalTeamsPlayers.Count == 1)
                     _gameplayStateMachine.Enter<EndGameState, Team>(winTeam);
             }
         }
