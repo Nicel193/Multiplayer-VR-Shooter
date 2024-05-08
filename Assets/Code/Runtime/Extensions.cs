@@ -7,7 +7,7 @@ namespace Code.Runtime
     {
         public static async Task WaitObjectSpawned(this NetworkObject networkObject)
         {
-            if (networkObject.IsValid)
+            if (networkObject.IsInSimulation)
                 await Task.Delay(100);
         }
     }
