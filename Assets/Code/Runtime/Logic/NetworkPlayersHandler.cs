@@ -18,7 +18,7 @@ namespace Code.Runtime.Logic
         
         [Networked, Capacity(10)]
         private NetworkDictionary<PlayerRef, Team> TeamsPlayers => default;
-        private Dictionary<PlayerRef, Team> LocalTeamsPlayers;
+        private Dictionary<PlayerRef, Team> LocalTeamsPlayers = new Dictionary<PlayerRef, Team>();
         
         private PlayerRig _playerRig;
         private GameplayStateMachine _gameplayStateMachine;
