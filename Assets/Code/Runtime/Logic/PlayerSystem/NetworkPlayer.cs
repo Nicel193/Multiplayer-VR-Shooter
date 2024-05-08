@@ -5,10 +5,10 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 namespace Code.Runtime.Logic.PlayerSystem
 {
-    [RequireComponent(typeof(NetworkPlayerRig), typeof(PlayerHealth))]
+    [RequireComponent(typeof(NetworkPlayerRig), typeof(PlayerData))]
     public class NetworkPlayer : NetworkBehaviour
     {
-        public PlayerHealth PlayerHealth { get; private set; }
+        public PlayerData PlayerData { get; private set; }
         public BaseWeapon PlayerWeapon { get; private set; }
 
         private NetworkPlayerRig _networkPlayerRig;
@@ -17,7 +17,7 @@ namespace Code.Runtime.Logic.PlayerSystem
         private void Awake()
         {
             _networkPlayerRig = GetComponent<NetworkPlayerRig>();
-            PlayerHealth = GetComponent<PlayerHealth>();
+            PlayerData = GetComponent<PlayerData>();
         }
 
         public override void Spawned()
@@ -27,8 +27,11 @@ namespace Code.Runtime.Logic.PlayerSystem
             _playerRig = FindObjectOfType<PlayerRig>();
             
             _networkPlayerRig.Initialize(_playerRig);
+            
             _playerRig.RightHand.selectEntered.AddListener(SelectWeapon);
             _playerRig.RightHand.selectExited.AddListener(RemoveWeapon);
+            _playerRig.LeftHand.selectEntered.AddListener(SelectWeapon);
+            _playerRig.LeftHand.selectExited.AddListener(RemoveWeapon);
         }
 
         public override void Despawned(NetworkRunner runner, bool hasState)
@@ -37,12 +40,18 @@ namespace Code.Runtime.Logic.PlayerSystem
             
             _playerRig.RightHand.selectEntered.RemoveListener(SelectWeapon);
             _playerRig.RightHand.selectExited.RemoveListener(RemoveWeapon);
+            _playerRig.LeftHand.selectEntered.RemoveListener(SelectWeapon);
+            _playerRig.LeftHand.selectExited.RemoveListener(RemoveWeapon);
         }
 
         private void SelectWeapon(SelectEnterEventArgs arg)
         {
-            if(arg.interactableObject.transform.TryGetComponent(out BaseWeapon baseWeapon))
+            if (arg.interactableObject.transform.TryGetComponent(out BaseWeapon baseWeapon))
+            {
                 PlayerWeapon = baseWeapon;
+                
+                PlayerWeapon.Initialize(PlayerData);
+            }
         }
 
         private void RemoveWeapon(SelectExitEventArgs arg0) =>

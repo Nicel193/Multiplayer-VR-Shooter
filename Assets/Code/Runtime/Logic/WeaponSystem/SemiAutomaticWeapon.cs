@@ -7,9 +7,14 @@ namespace Code.Runtime.Logic.WeaponSystem
         protected override void ShootImplementation(Vector3 direction)
         {
             Bullet bullet = Runner.Spawn(BulletPrefab, SpawnBulletPoint.position, Quaternion.identity);
-            
+
             bullet.Initialize(Damage);
-            bullet.Launch(direction, ShootForce);
+            bullet.Launch(direction, ShootForce, OnDamage);
+        }
+
+        private void OnDamage(bool isKill)
+        {
+            if (isKill) PlayerData.RPC_AddKill();
         }
     }
 }

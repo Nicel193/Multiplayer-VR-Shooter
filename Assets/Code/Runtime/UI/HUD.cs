@@ -22,8 +22,8 @@ namespace Code.Runtime.UI
 
         private void DisplayHealthText()
         {
-            float health = networkPlayer.PlayerHealth.Health;
-            float maxHealth = networkPlayer.PlayerHealth.MAXHealth;
+            float health = networkPlayer.PlayerData.Health;
+            float maxHealth = networkPlayer.PlayerData.MAXHealth;
 
             float healthPercentage = health / maxHealth;
             healthImage.fillAmount = healthPercentage;

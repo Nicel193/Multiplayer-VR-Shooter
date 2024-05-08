@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ namespace Code.Runtime.Logic.WeaponSystem
 
         [Networked] private TickTimer Timer { set; get; }
         private Rigidbody _bulletRigidbody;
+        private Action<bool> _onDamage;
         private int _damage;
 
         private void Awake()
@@ -35,10 +37,11 @@ namespace Code.Runtime.Logic.WeaponSystem
             _damage = damage;
         }
 
-        public void Launch(Vector3 direction, float force)
+        public void Launch(Vector3 direction, float force, Action<bool> onDamage = null)
         {
             direction.Normalize();
    
+            _onDamage = onDamage;
             _bulletRigidbody.AddForce(direction * force, ForceMode.Impulse);
         }
 
@@ -46,8 +49,12 @@ namespace Code.Runtime.Logic.WeaponSystem
         {
             if (other.gameObject.TryGetComponent(out IDamageable damageable))
             {
+                if(damageable.IsDead()) return;
+                
                 damageable.RPC_Damage(_damage);
                 
+                _onDamage?.Invoke(damageable.IsDead());
+
                 Runner.Despawn(Object);
             }
         }

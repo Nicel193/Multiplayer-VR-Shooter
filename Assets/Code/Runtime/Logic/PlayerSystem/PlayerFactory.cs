@@ -25,7 +25,7 @@ namespace Code.Runtime.Logic.PlayerSystem
 
             _diContainer.InjectGameObject(networkPlayer.gameObject);
             
-            networkPlayer.GetComponent<PlayerHealth>().Initialize(_playerConfig.MaxPlayerHealth);
+            networkPlayer.GetComponent<PlayerData>().Initialize(_playerConfig.MaxPlayerHealth);
             
             return networkPlayer;
         }

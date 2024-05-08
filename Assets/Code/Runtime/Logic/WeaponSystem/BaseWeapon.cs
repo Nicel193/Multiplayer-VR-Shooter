@@ -1,3 +1,4 @@
+using Code.Runtime.Logic.PlayerSystem;
 using Fusion;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -14,6 +15,7 @@ namespace Code.Runtime.Logic.WeaponSystem
         [SerializeField] protected float ShootForce;
         [SerializeField] private XRSocketInteractor magazineSocket;
 
+        protected PlayerData PlayerData;
         private XRGrabInteractable _xrGrabInteractable;
         private IXRSelectInteractor _interactorObject;
         private float _shootInterval;
@@ -40,6 +42,11 @@ namespace Code.Runtime.Logic.WeaponSystem
         {
             if (_shootTimer < _shootInterval)
                 _shootTimer += Runner.DeltaTime;
+        }
+
+        public void Initialize(PlayerData playerData)
+        {
+            PlayerData = playerData;
         }
 
         protected abstract void ShootImplementation(Vector3 direction);

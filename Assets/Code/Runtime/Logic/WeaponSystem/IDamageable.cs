@@ -6,5 +6,7 @@ namespace Code.Runtime.Logic.WeaponSystem
     {
         [Rpc]
         void RPC_Damage(int damage);
+
+        bool IsDead();
     }
 }

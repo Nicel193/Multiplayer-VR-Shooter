@@ -5,12 +5,13 @@ using UnityEngine;
 
 namespace Code.Runtime.Logic.PlayerSystem
 {
-    public class PlayerHealth : NetworkBehaviour, IDamageable
+    public class PlayerData : NetworkBehaviour, IDamageable
     {
         public event Action OnPlayerDead;
         
         [HideInInspector, Networked] public int MAXHealth { get; private set; }
         [HideInInspector, Networked] public int Health { get; private set; }
+        [HideInInspector, Networked] public int Kills { get; private set; }
 
         private bool _isPlayerDead;
 
@@ -19,6 +20,14 @@ namespace Code.Runtime.Logic.PlayerSystem
             MAXHealth = maxHealth;
 
             Health = maxHealth;
+        }
+
+        [Rpc]
+        public void RPC_AddKill()
+        {
+            Kills++;
+
+            Debug.Log("Add kill");
         }
         
         [Rpc]
@@ -45,5 +54,8 @@ namespace Code.Runtime.Logic.PlayerSystem
 
             _isPlayerDead = false;
         }
+
+        public bool IsDead() =>
+            _isPlayerDead;
     }
 }
