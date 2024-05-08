@@ -18,7 +18,7 @@ namespace Code.Runtime.Infrastructure.States.Gameplay
         public void Enter(PlayerRef playerRef)
         {
             _playerFactory.CreatePlayer(playerRef);
-            _networkPlayersHandler.RPC_AddPlayer(playerRef);
+            _networkPlayersHandler.AddPlayer(playerRef);
         }
 
         public void Exit()

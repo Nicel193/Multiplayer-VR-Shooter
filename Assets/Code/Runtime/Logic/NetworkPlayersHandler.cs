@@ -31,15 +31,21 @@ namespace Code.Runtime.Logic
         {
             _playerRig.transform.position = GetPlayerSpawnPosition(playerRef);
         }
-
-        [Rpc]
-        public async void RPC_AddPlayer(PlayerRef playerRef)
+        
+        public async void AddPlayer(PlayerRef playerRef)
         {
             await Runner.WaitObjectSpawned();
             
+            RPC_AddPlayer(playerRef);
+        }
+
+        [Rpc]
+        private void RPC_AddPlayer(PlayerRef playerRef)
+        {
             AddPlayerInTeam(playerRef);
             MovePlayerInStartPosition(playerRef);
         }
+        
 
         [Rpc]
         public void RPC_RemovePlayer(PlayerRef playerRef)

@@ -4,8 +4,7 @@ namespace Code.Runtime.Logic
 {
     public interface INetworkPlayersHandler
     {
-        [Rpc]
-        void RPC_AddPlayer(PlayerRef playerRef);
+        void AddPlayer(PlayerRef playerRef);
         
         [Rpc]
         void RPC_RemovePlayer(PlayerRef playerRef);
