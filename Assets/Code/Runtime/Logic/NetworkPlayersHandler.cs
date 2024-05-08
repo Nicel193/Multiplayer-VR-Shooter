@@ -18,7 +18,7 @@ namespace Code.Runtime.Logic
         
         private PlayerRig _playerRig;
         private GameplayStateMachine _gameplayStateMachine;
-        private bool _isSpawned;
+        private bool _isAddedLocalPlayer;
 
         [Inject]
         private void Construct(PlayerRig playerRig, GameplayStateMachine gameplayStateMachine)
@@ -35,18 +35,21 @@ namespace Code.Runtime.Logic
         public async void AddPlayer(PlayerRef playerRef)
         {
             await Runner.WaitObjectSpawned();
-            
+
             RPC_AddPlayer(playerRef);
         }
 
         [Rpc]
         private void RPC_AddPlayer(PlayerRef playerRef)
         {
+            if (_isAddedLocalPlayer) return;
+
             AddPlayerInTeam(playerRef);
             MovePlayerInStartPosition(playerRef);
+
+            _isAddedLocalPlayer = true;
         }
         
-
         [Rpc]
         public void RPC_RemovePlayer(PlayerRef playerRef)
         {
