@@ -243,7 +243,7 @@ namespace Fusion.Addons.ConnectionManagerAddon
             }
         }
         public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) {
-            _networkPlayersHandler.RPC_RemovePlayer(player);
+            _networkPlayersHandler.RemovePlayer(player);
             
             if (runner.Topology == Topologies.ClientServer)
             {

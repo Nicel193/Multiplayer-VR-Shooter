@@ -52,8 +52,7 @@ namespace Code.Runtime.Logic
             }
         }
         
-        [Rpc]
-        public void RPC_RemovePlayer(PlayerRef playerRef)
+        public void RemovePlayer(PlayerRef playerRef)
         {
             if(TeamsPlayers.ContainsKey(playerRef))
             {
