@@ -2607,19 +2607,19 @@
             "actions": [
                 {
                     "name": "OpenGameStatsWindow",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "370abe1d-01a1-4aa2-a21f-1a3a5445f66f",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "d39932a1-0206-49b9-afc1-d6e7e7cda3a7",
-                    "path": "<XRController>{LeftHand}/trackpadDpadRight",
+                    "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
