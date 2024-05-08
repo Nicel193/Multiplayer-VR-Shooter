@@ -48,8 +48,7 @@ namespace Code.Runtime.Logic
         private void RPC_AddPlayer(PlayerRef playerRef)
         {
             AddPlayerInTeam(playerRef);
-
-            LocalTeamsPlayers = TeamsPlayers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            InitializeLocalTeamsPlayers();
             
             if (!_isAddedLocalPlayer)
             {
@@ -90,6 +89,12 @@ namespace Code.Runtime.Logic
                 return redTeamSpawn.GetSpawnPosition();
 
             return blueTeamSpawn.GetSpawnPosition();
+        }
+
+        private void InitializeLocalTeamsPlayers()
+        {
+            LocalTeamsPlayers = TeamsPlayers
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
     }
 }

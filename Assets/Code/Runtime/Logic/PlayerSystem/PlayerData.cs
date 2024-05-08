@@ -26,8 +26,6 @@ namespace Code.Runtime.Logic.PlayerSystem
         public void RPC_AddKill()
         {
             Kills++;
-
-            Debug.Log("Add kill");
         }
         
         [Rpc]
