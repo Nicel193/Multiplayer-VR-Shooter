@@ -30,7 +30,7 @@ namespace Code.Runtime.Logic.PlayerSystem
             if(!Object.HasStateAuthority) return;
             
             _playerHealth.RPC_ResumeHealth();
-            _networkPlayersHandler.MovePlayerInStartPosition();
+            _networkPlayersHandler.MovePlayerInStartPosition(Runner.LocalPlayer);
         }
     }
 }

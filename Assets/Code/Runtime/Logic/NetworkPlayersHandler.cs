@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Code.Runtime.Infrastructure.StateMachines;
 using Code.Runtime.Infrastructure.States.Gameplay;
 using Code.Runtime.Logic.PlayerSystem;
@@ -16,11 +15,10 @@ namespace Code.Runtime.Logic
         
         [Networked, Capacity(10)]
         private NetworkDictionary<PlayerRef, Team> TeamsPlayers => default;
-
-        private PlayerRef _localPlayer;
+        
         private PlayerRig _playerRig;
-        private bool _isSpawned;
         private GameplayStateMachine _gameplayStateMachine;
+        private bool _isSpawned;
 
         [Inject]
         private void Construct(PlayerRig playerRig, GameplayStateMachine gameplayStateMachine)
@@ -28,23 +26,23 @@ namespace Code.Runtime.Logic
             _gameplayStateMachine = gameplayStateMachine;
             _playerRig = playerRig;
         }
-        
-        public void MovePlayerInStartPosition()
+
+        public void MovePlayerInStartPosition(PlayerRef playerRef)
         {
-            _playerRig.transform.position = GetPlayerSpawnPosition(_localPlayer);
+            _playerRig.transform.position = GetPlayerSpawnPosition(playerRef);
         }
 
-        public async void AddPlayer(PlayerRef playerRef)
+        [Rpc]
+        public async void RPC_AddPlayer(PlayerRef playerRef)
         {
             await Runner.WaitObjectSpawned();
-
-            _localPlayer = playerRef;
             
-            AddPlayerInTeam(_localPlayer);
-            MovePlayerInStartPosition();
+            AddPlayerInTeam(playerRef);
+            MovePlayerInStartPosition(playerRef);
         }
 
-        public void RemovePlayer(PlayerRef playerRef)
+        [Rpc]
+        public void RPC_RemovePlayer(PlayerRef playerRef)
         {
             if(TeamsPlayers.ContainsKey(playerRef))
             {
