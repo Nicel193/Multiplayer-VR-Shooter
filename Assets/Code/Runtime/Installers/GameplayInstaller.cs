@@ -2,6 +2,8 @@ using Code.Runtime.Infrastructure;
 using Code.Runtime.Infrastructure.StateMachines;
 using Code.Runtime.Logic;
 using Code.Runtime.Logic.PlayerSystem;
+using Code.Runtime.Service;
+using Code.Runtime.UI.Windows;
 using Fusion;
 using UnityEngine;
 using Zenject;
@@ -23,10 +25,24 @@ namespace Code.Runtime.Installers
             BindPlayerFactory();
 
             BindNetworkPlayersHandler();
+
+            BindWindowFactory();
+
+            BindWindowService();
             
             Container.BindInstance(networkRunner);
             
             Container.BindInstance(playerRig);
+        }
+
+        private void BindWindowService()
+        {
+            Container.BindInterfacesTo<WindowService>().AsSingle();
+        }
+
+        private void BindWindowFactory()
+        {
+            Container.BindInterfacesTo<WindowFactory>().AsSingle();
         }
 
         private void BindNetworkPlayersHandler()

@@ -25,8 +25,13 @@ namespace Code.Runtime.Logic.PlayerSystem
             if(_playerRig == null) return;
 
             Vector3 xROriginCameraPosition = _playerRig.Camera.transform.position;
+            Vector3 xROriginCameraRotation = _playerRig.Camera.transform.eulerAngles;
 
             transform.position = new Vector3(xROriginCameraPosition.x, 0f, xROriginCameraPosition.z);
+            transform.rotation = Quaternion.Euler(new Vector3(
+                transform.rotation.x,
+                xROriginCameraRotation.y,
+                transform.rotation.y));
             
             leftHand.transform.position = _playerRig.LeftHand.transform.position;
             leftHand.transform.rotation = _playerRig.LeftHand.transform.rotation;

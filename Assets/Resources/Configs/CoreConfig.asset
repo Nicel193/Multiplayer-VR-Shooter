@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerConfig: {fileID: 11400000, guid: a6bbdd90d0d98e24a91ca492789b91e9, type: 2}
   gameConfig: {fileID: 11400000, guid: 5f3f1a11ea0193d4880332d77f599781, type: 2}
+  windowsConfig: {fileID: 11400000, guid: e3d5dc629013e1f4ea9bc9b5eaabaa7d, type: 2}

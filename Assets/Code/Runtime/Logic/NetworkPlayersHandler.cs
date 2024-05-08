@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Code.Runtime.Infrastructure.StateMachines;
-using Code.Runtime.Infrastructure.States.Core;
 using Code.Runtime.Infrastructure.States.Gameplay;
 using Code.Runtime.Logic.PlayerSystem;
+using Code.Runtime.Service;
+using Code.Runtime.UI.Windows;
 using Fusion;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 using Zenject;
 
 namespace Code.Runtime.Logic
@@ -24,10 +24,12 @@ namespace Code.Runtime.Logic
         private GameplayStateMachine _gameplayStateMachine;
         private bool _isAddedLocalPlayer;
         private bool _isSpawned;
+        private IWindowService _windowService;
 
         [Inject]
-        private void Construct(PlayerRig playerRig, GameplayStateMachine gameplayStateMachine)
+        private void Construct(PlayerRig playerRig, GameplayStateMachine gameplayStateMachine, IWindowService windowService)
         {
+            _windowService = windowService;
             _gameplayStateMachine = gameplayStateMachine;
             _playerRig = playerRig;
         }
@@ -40,6 +42,8 @@ namespace Code.Runtime.Logic
         public async void AddPlayer(PlayerRef playerRef)
         {
             await Runner.WaitObjectSpawned();
+            
+            _windowService.OpenPayloadWindow<EndGameWindow, Team>(Team.Red);
 
             RPC_AddPlayer(playerRef);
         }
@@ -56,6 +60,12 @@ namespace Code.Runtime.Logic
 
                 _isAddedLocalPlayer = true;
             }
+        }
+
+        private void InitializeLocalTeamsPlayers()
+        {
+            LocalTeamsPlayers = TeamsPlayers
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
         public void RemovePlayer(PlayerRef playerRef)
@@ -89,12 +99,6 @@ namespace Code.Runtime.Logic
                 return redTeamSpawn.GetSpawnPosition();
 
             return blueTeamSpawn.GetSpawnPosition();
-        }
-
-        private void InitializeLocalTeamsPlayers()
-        {
-            LocalTeamsPlayers = TeamsPlayers
-                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
     }
 }

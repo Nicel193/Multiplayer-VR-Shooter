@@ -9,11 +9,13 @@ namespace Code.Runtime.Installers
     {
         [SerializeField] private PlayerConfig playerConfig;
         [SerializeField] private GameConfig gameConfig;
+        [SerializeField] private WindowsConfig windowsConfig;
         
         public override void InstallBindings()
         {
             Container.BindInstance(playerConfig);
             Container.BindInstance(gameConfig);
+            Container.BindInstance(windowsConfig);
         }
     }
 }
