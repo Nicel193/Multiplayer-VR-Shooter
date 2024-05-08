@@ -5,9 +5,9 @@ namespace Code.Runtime
 {
     public static class Extensions
     {
-        public static async Task WaitObjectSpawned(this NetworkObject networkObject)
+        public static async Task WaitObjectSpawned(this NetworkRunner networkRunner)
         {
-            if (networkObject.IsInSimulation)
+            if (networkRunner.IsFirstTick)
                 await Task.Delay(100);
         }
     }

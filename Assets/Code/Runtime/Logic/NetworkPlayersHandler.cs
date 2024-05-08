@@ -36,7 +36,7 @@ namespace Code.Runtime.Logic
 
         public async void AddPlayer(PlayerRef playerRef)
         {
-            await Object.WaitObjectSpawned();
+            await Runner.WaitObjectSpawned();
 
             _localPlayer = playerRef;
             
