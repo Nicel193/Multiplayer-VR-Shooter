@@ -1,43 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
-[System.Serializable]
-public class bodySocket
+[Serializable]
+public class BodySocket
 {
-    public GameObject gameObject;
-    [Range(0.01f, 1f)]
-    public float heightRatio;
+    public XRSocketInteractor SocketInteractor;
+    [Range(0.01f, 1f)] public float heightRatio;
 }
 
 public class BodySocketInventory : MonoBehaviour
-
 {
     public GameObject HMD;
-    public bodySocket[] bodySockets;
+    public BodySocket[] bodySockets;
 
     private Vector3 _currentHMDlocalPosition;
     private Quaternion _currentHMDRotation;
-    void Update()
+
+    private void Update()
     {
         _currentHMDlocalPosition = HMD.transform.localPosition;
         _currentHMDRotation = HMD.transform.rotation;
-        foreach(var bodySocket in bodySockets)
+        foreach (var bodySocket in bodySockets)
         {
             UpdateBodySocketHeight(bodySocket);
         }
+
         UpdateSocketInventory();
     }
 
-    private void UpdateBodySocketHeight(bodySocket bodySocket)
+    private void UpdateBodySocketHeight(BodySocket bodySocket)
     {
-
-        bodySocket.gameObject.transform.localPosition = new Vector3(bodySocket.gameObject.transform.localPosition.x,(HMD.transform.position.y * bodySocket.heightRatio), bodySocket.gameObject.transform.localPosition.z);
+        bodySocket.SocketInteractor.gameObject.transform.localPosition = new Vector3(
+            bodySocket.SocketInteractor.gameObject.transform.localPosition.x,
+            (HMD.transform.position.y * bodySocket.heightRatio),
+            bodySocket.SocketInteractor.gameObject.transform.localPosition.z);
     }
 
     private void UpdateSocketInventory()
     {
         transform.localPosition = new Vector3(_currentHMDlocalPosition.x, 0, _currentHMDlocalPosition.z);
-        transform.rotation = new Quaternion(transform.rotation.x, _currentHMDRotation.y, transform.rotation.z, _currentHMDRotation.w);
+        transform.rotation = new Quaternion(transform.rotation.x, _currentHMDRotation.y, transform.rotation.z,
+            _currentHMDRotation.w);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Code.Runtime.Infrastructure.StateMachines;
 using Code.Runtime.Repositories;
-using Fusion;
 
 namespace Code.Runtime.Infrastructure.States.Core
 {
