@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Fusion;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -11,6 +10,8 @@ namespace Code.Runtime.Logic
 
         public override void Spawned()
         {
+            if(!Object.HasStateAuthority) return;
+            
             BodySocketInventory bodySocketInventory = FindObjectOfType<BodySocketInventory>();
 
             if (bodySocketInventory.bodySockets.Length < itemsPrefabs.Length)
