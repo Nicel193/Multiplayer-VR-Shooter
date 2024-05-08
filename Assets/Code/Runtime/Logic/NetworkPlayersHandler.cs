@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using Code.Runtime.Infrastructure.StateMachines;
+using Code.Runtime.Infrastructure.States.Core;
 using Code.Runtime.Infrastructure.States.Gameplay;
 using Code.Runtime.Logic.PlayerSystem;
 using Fusion;
@@ -13,12 +15,13 @@ namespace Code.Runtime.Logic
         [SerializeField] private PlayerSpawnPosition redTeamSpawn;
         [SerializeField] private PlayerSpawnPosition blueTeamSpawn;
         
-        [Networked, Capacity(10)]
-        private NetworkDictionary<PlayerRef, Team> TeamsPlayers => default;
+        // [Networked, Capacity(10)]
+        private Dictionary<PlayerRef, Team> TeamsPlayers = new Dictionary<PlayerRef, Team>();
         
         private PlayerRig _playerRig;
         private GameplayStateMachine _gameplayStateMachine;
         private bool _isAddedLocalPlayer;
+        private bool _isSpawned;
 
         [Inject]
         private void Construct(PlayerRig playerRig, GameplayStateMachine gameplayStateMachine)
@@ -51,9 +54,16 @@ namespace Code.Runtime.Logic
                 _isAddedLocalPlayer = true;
             }
         }
-        
+
+        public override void Spawned()
+        {
+            _isSpawned = true;
+        }
+
         public void RemovePlayer(PlayerRef playerRef)
         {
+            Debug.Log(_isSpawned);
+            
             if(TeamsPlayers.ContainsKey(playerRef))
             {
                 TeamsPlayers.Remove(playerRef);
