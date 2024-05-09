@@ -6,21 +6,21 @@ using Code.Runtime.Logic.PlayerSystem;
 using Fusion;
 using UnityEngine;
 using Zenject;
-using NetworkPlayer = Code.Runtime.Logic.PlayerSystem.NetworkPlayer;
 
 namespace Code.Runtime.Logic
 {
     public class NetworkPlayersHandler : NetworkBehaviour, INetworkPlayersHandler
     {
         public INetworkPlayer LocalNetworkPlayer { get; private set; }
+        public IReadOnlyDictionary<PlayerRef, Team> GetTeamsPlayers => _localTeamsPlayers;
 
         [SerializeField] private PlayerSpawnPosition redTeamSpawn;
         [SerializeField] private PlayerSpawnPosition blueTeamSpawn;
         
         [Networked, Capacity(10)]
         private NetworkDictionary<PlayerRef, Team> TeamsPlayers => default;
-        private Dictionary<PlayerRef, Team> LocalTeamsPlayers = new Dictionary<PlayerRef, Team>();
-        
+        private Dictionary<PlayerRef, Team> _localTeamsPlayers = new Dictionary<PlayerRef, Team>();
+
         private PlayerRig _playerRig;
         private GameplayStateMachine _gameplayStateMachine;
         private bool _isSpawned;
@@ -42,11 +42,11 @@ namespace Code.Runtime.Logic
             await Runner.WaitObjectSpawned();
             
             RPC_AddPlayer(playerRef);
-            
+
             if (LocalNetworkPlayer == null)
             {
                 MovePlayerInStartPosition(playerRef);
-
+                
                 LocalNetworkPlayer = networkPlayer;
             }
         }
@@ -60,30 +60,30 @@ namespace Code.Runtime.Logic
 
         private void InitializeLocalTeamsPlayers()
         {
-            LocalTeamsPlayers = TeamsPlayers
+            _localTeamsPlayers = TeamsPlayers
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
         public void RemovePlayer(PlayerRef playerRef)
         {
-            if(LocalTeamsPlayers.ContainsKey(playerRef))
+            if(_localTeamsPlayers.ContainsKey(playerRef))
             {
-                LocalTeamsPlayers.Remove(playerRef);
+                _localTeamsPlayers.Remove(playerRef);
 
-                Team winTeam = LocalTeamsPlayers
+                Team winTeam = _localTeamsPlayers
                     .Take(1)
                     .Select(d => d.Value)
                     .First();
 
-                if (LocalTeamsPlayers.Count == 1)
-                    _gameplayStateMachine.Enter<EndGameState, Team>(winTeam);
+                if (_localTeamsPlayers.Count == 1)
+                    _gameplayStateMachine.Enter<EnemyLeftState, Team>(winTeam);
             }
         }
 
         private void AddPlayerInTeam(PlayerRef playerRef)
         {
             Team teamColor = TeamsPlayers.Count % 2 == 0 ? Team.Blue : Team.Red;
-            
+
             TeamsPlayers.Add(playerRef, teamColor);
         }
 

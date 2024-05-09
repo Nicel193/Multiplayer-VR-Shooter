@@ -12,14 +12,15 @@ namespace Code.Runtime.Logic.PlayerSystem
         [HideInInspector, Networked] public int MAXHealth { get; private set; }
         [HideInInspector, Networked] public int Health { get; private set; }
         [HideInInspector, Networked] public int Kills { get; private set; }
+        [HideInInspector, Networked] public PlayerRef PlayerRef { get; private set; }
 
         [Networked] private bool IsPlayerDead { get; set; }
 
-        public void Initialize(int maxHealth)
+        public void Initialize(int maxHealth, PlayerRef playerRef)
         {
             MAXHealth = maxHealth;
-
             Health = maxHealth;
+            PlayerRef = playerRef;
         }
 
         [Rpc]

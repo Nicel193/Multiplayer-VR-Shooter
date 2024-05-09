@@ -1,4 +1,6 @@
 using Code.Runtime.Configs;
+using Code.Runtime.Infrastructure.StateMachines;
+using Code.Runtime.Infrastructure.States.Gameplay;
 using Fusion;
 using UnityEngine;
 using Zenject;
@@ -10,12 +12,14 @@ namespace Code.Runtime.Logic
         [Networked] private TickTimer GameTimer { get; set; }
         [Networked] private GameTimeState CurrentGameTimeState { get; set; }
 
+        private GameplayStateMachine _gameplayStateMachine;
         private float _warmUpTime;
         private float _matchTime;
 
         [Inject]
-        private void Construct(GameConfig gameConfig)
+        private void Construct(GameConfig gameConfig, GameplayStateMachine gameplayStateMachine)
         {
+            _gameplayStateMachine = gameplayStateMachine;
             _warmUpTime = gameConfig.WarmUpTime;
             _matchTime = gameConfig.MatchTime;
         }
@@ -41,8 +45,9 @@ namespace Code.Runtime.Logic
                         Debug.Log("Warm-up end");
                         break;
                     case GameTimeState.Match:
+                        _gameplayStateMachine.Enter<MathEndState>();
                         CurrentGameTimeState = GameTimeState.End;
-                        
+
                         Debug.Log("Match end");
                         break;
                     case GameTimeState.End:

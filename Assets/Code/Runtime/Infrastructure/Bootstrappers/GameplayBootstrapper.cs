@@ -30,8 +30,9 @@ namespace Code.Runtime.Infrastructure.Bootstrappers
         private void AddGameplayStates()
         {
             _gameplayStateMachine.RegisterState(_statesFactory.Create<GameLoopState>());
-            _gameplayStateMachine.RegisterState(_statesFactory.Create<EndGameState>());
+            _gameplayStateMachine.RegisterState(_statesFactory.Create<EnemyLeftState>());
             _gameplayStateMachine.RegisterState(_statesFactory.Create<LoadState>());
+            _gameplayStateMachine.RegisterState(_statesFactory.Create<MathEndState>());
         }
     }
 }
