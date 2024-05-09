@@ -13,13 +13,14 @@ GameObject:
   - component: {fileID: 8160841356311716244}
   - component: {fileID: 3749901464747711830}
   - component: {fileID: 2505812330689303536}
+  - component: {fileID: 1859979569373728955}
   m_Layer: 5
   m_Name: EndGameWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2455164789332365645
 RectTransform:
   m_ObjectHideFlags: 0
@@ -118,6 +119,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   winTeamText: {fileID: 7723671410251781244}
   exitButton: {fileID: 5047265679373320858}
+--- !u!114 &1859979569373728955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950357307532791345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7951c64acb0fa62458bf30a60089fe2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 0
+  m_CheckFor2DOcclusion: 0
+  m_CheckFor3DOcclusion: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
+  m_RaycastTriggerInteraction: 1
 --- !u!1 &2390823425511353761
 GameObject:
   m_ObjectHideFlags: 0

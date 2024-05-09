@@ -185,9 +185,12 @@ MonoBehaviour:
   - {fileID: 9043004426478996567}
   - {fileID: 5911460556788202505}
   - {fileID: 547413766170123818}
+  - {fileID: 1044857843616516770}
+  - {fileID: 7665780057036055036}
   - {fileID: 5155372814009472752}
   - {fileID: 8848394183803838415}
   - {fileID: 4796714195837562164}
+  - {fileID: 1366670616834346848}
   - {fileID: 2395138080160005526}
 --- !u!1 &3682307933105441490
 GameObject:
@@ -540,6 +543,7 @@ GameObject:
   - component: {fileID: 1157942620128922141}
   - component: {fileID: 1767033334700974137}
   - component: {fileID: 4796714195837562164}
+  - component: {fileID: 1366670616834346848}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -629,6 +633,19 @@ MonoBehaviour:
   healthImage: {fileID: 4321240424444522379}
   ammoText: {fileID: 7411303027962515127}
   networkPlayer: {fileID: 4606662638425955876}
+--- !u!114 &1366670616834346848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5424674511756073267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a211c3f805af4c36a2b779f6c5e46bcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLocalVisibility: 1
 --- !u!1 &6344940352751361116
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,6 +657,7 @@ GameObject:
   - component: {fileID: 6344940352751361104}
   - component: {fileID: 6344940352751361119}
   - component: {fileID: 6344940352751361118}
+  - component: {fileID: 7665780057036055036}
   - component: {fileID: 5155372814009472752}
   m_Layer: 0
   m_Name: PlayerModel
@@ -715,6 +733,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7665780057036055036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6344940352751361116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a211c3f805af4c36a2b779f6c5e46bcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLocalVisibility: 0
 --- !u!114 &5155372814009472752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -743,6 +774,7 @@ GameObject:
   - component: {fileID: 2165729296058305557}
   - component: {fileID: 6196332120954491812}
   - component: {fileID: 547413766170123818}
+  - component: {fileID: 1044857843616516770}
   m_Layer: 5
   m_Name: PlayerNickname
   m_TagString: Untagged
@@ -830,6 +862,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nicknameText: {fileID: 429065459785372753}
   playerData: {fileID: -896543221039903721}
+--- !u!114 &1044857843616516770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6370964817925416224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a211c3f805af4c36a2b779f6c5e46bcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLocalVisibility: 0
 --- !u!1 &7625453550880486242
 GameObject:
   m_ObjectHideFlags: 0

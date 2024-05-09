@@ -1,8 +1,11 @@
+using Code.Runtime.Infrastructure.StateMachines;
+using Code.Runtime.Infrastructure.States;
+using Code.Runtime.Infrastructure.States.Core;
 using Code.Runtime.Logic;
-using Code.Runtime.Service;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Code.Runtime.UI.Windows
 {
@@ -10,6 +13,14 @@ namespace Code.Runtime.UI.Windows
     {
         [SerializeField] private TextMeshProUGUI winTeamText;
         [SerializeField] private Button exitButton;
+        
+        private GameStateMachine _gameStateMachine;
+
+        [Inject]
+        private void Construct(GameStateMachine gameStateMachine)
+        {
+            _gameStateMachine = gameStateMachine;
+        }
 
         private void Awake() =>
             exitButton.onClick.AddListener(ExitInMenu);
@@ -32,6 +43,7 @@ namespace Code.Runtime.UI.Windows
 
         private void ExitInMenu()
         {
+            _gameStateMachine.Enter<LoadSceneState, string>(SceneName.Menu.ToString());
         }
     }
 }

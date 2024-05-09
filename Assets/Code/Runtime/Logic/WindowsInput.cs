@@ -1,4 +1,3 @@
-using System;
 using Code.Runtime.Service;
 using Code.Runtime.UI.Windows;
 using UnityEngine;
@@ -18,26 +17,12 @@ namespace Code.Runtime.Logic
             _windowService = windowService;
         }
 
-        private void Awake()
+        private void Update()
         {
-            openGameStatsWindow.action.performed += OpenGameStatsWindow;
-            openGameStatsWindow.action.canceled += CloseGameStatsWindow;
-        }
-
-        private void OnDestroy()
-        {
-            openGameStatsWindow.action.performed -= OpenGameStatsWindow;
-            openGameStatsWindow.action.canceled += CloseGameStatsWindow;
-        }
-
-        private void OpenGameStatsWindow(InputAction.CallbackContext obj)
-        {
-            _windowService.OpenWindow<GameStatsWindow>();
-        }
-
-        private void CloseGameStatsWindow(InputAction.CallbackContext obj)
-        {
-            _windowService.Close();
+            if (OVRInput.GetDown(OVRInput.RawButton.Y) || OVRInput.GetDown(OVRInput.RawButton.B))
+                _windowService.OpenWindow<GameStatsWindow>();
+            else
+                _windowService.Close();
         }
     }
 }

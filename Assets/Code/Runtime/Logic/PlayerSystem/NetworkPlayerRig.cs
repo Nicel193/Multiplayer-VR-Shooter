@@ -5,6 +5,8 @@ namespace Code.Runtime.Logic.PlayerSystem
 {
     public class NetworkPlayerRig : NetworkBehaviour
     {
+        private const float YPlayerOffset = 0.2f;
+        
         [SerializeField] private Transform leftHand;
         [SerializeField] private Transform rightHand;
 
@@ -27,7 +29,7 @@ namespace Code.Runtime.Logic.PlayerSystem
             Vector3 xROriginCameraPosition = _playerRig.Camera.transform.position;
             Vector3 xROriginCameraRotation = _playerRig.Camera.transform.eulerAngles;
 
-            transform.position = new Vector3(xROriginCameraPosition.x, 0f, xROriginCameraPosition.z);
+            transform.position = new Vector3(xROriginCameraPosition.x, YPlayerOffset, xROriginCameraPosition.z);
             transform.rotation = Quaternion.Euler(new Vector3(
                 transform.rotation.x,
                 xROriginCameraRotation.y,
