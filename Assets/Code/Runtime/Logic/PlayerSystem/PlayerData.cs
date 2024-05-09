@@ -12,7 +12,7 @@ namespace Code.Runtime.Logic.PlayerSystem
         [HideInInspector, Networked] public int MAXHealth { get; private set; }
         [HideInInspector, Networked] public int Health { get; private set; }
         [HideInInspector, Networked] public int Kills { get; private set; }
-        [HideInInspector, Networked] public string Nickname { get; private set; } = "Test";
+        [HideInInspector, Networked] public string Nickname { get; private set; };
         [HideInInspector, Networked] public PlayerRef PlayerRef { get; private set; }
 
         [Networked] private bool IsPlayerDead { get; set; }

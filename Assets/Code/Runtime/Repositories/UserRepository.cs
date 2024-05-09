@@ -4,7 +4,7 @@ namespace Code.Runtime.Repositories
 {
     public class UserRepository
     {
-        public string Nickname { get; private set; }
+        public string Nickname { get; private set; } = "Test";
 
         private readonly NicknameGenerator _nicknameGenerator = new NicknameGenerator();
 
