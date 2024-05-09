@@ -45,7 +45,7 @@ namespace Code.Runtime.Logic
                         Debug.Log("Warm-up end");
                         break;
                     case GameTimeState.Match:
-                        _gameplayStateMachine.Enter<MathEndState>();
+                        RPC_EndGame();
                         CurrentGameTimeState = GameTimeState.End;
 
                         Debug.Log("Match end");
@@ -55,29 +55,7 @@ namespace Code.Runtime.Logic
                 }
             }
         }
-
-        [Rpc]
-        private void RPC_ChangeState()
-        {
-            switch (CurrentGameTimeState)
-            {
-                case GameTimeState.WarmUp:
-                    GameTimer = TickTimer.CreateFromSeconds(Runner, _matchTime);
-                    CurrentGameTimeState = GameTimeState.Match;
-                        
-                    Debug.Log("Warm-up end");
-                    break;
-                case GameTimeState.Match:
-                    RPC_EndGame();
-                    CurrentGameTimeState = GameTimeState.End;
-
-                    Debug.Log("Match end");
-                    break;
-                case GameTimeState.End:
-                    break;
-            }
-        }
-
+        
         [Rpc]
         private void RPC_EndGame()
         {
