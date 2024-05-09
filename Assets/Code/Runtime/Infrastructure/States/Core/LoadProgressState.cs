@@ -16,10 +16,7 @@ namespace Code.Runtime.Infrastructure.States.Core
 
         public void Enter()
         {
-            // _gameStateMachine
-            //     .Enter<LoadGameplayState, (string sessionName, GameMode gameMode)>(("Test", GameMode.Shared));
-            
-            _gameStateMachine.Enter<LoadSceneState, string>(SceneName.Gameplay.ToString());
+            _gameStateMachine.Enter<LoadSceneState, string>(SceneName.Menu.ToString());
         }
 
         public void Exit()
