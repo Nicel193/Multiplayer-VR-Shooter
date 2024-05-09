@@ -28,7 +28,6 @@ namespace Code.Runtime.UI.Windows
         private void OnDestroy() =>
             exitButton.onClick.RemoveListener(ExitInMenu);
 
-
         public void Open(Team winTeam)
         {
             gameObject.SetActive(true);
