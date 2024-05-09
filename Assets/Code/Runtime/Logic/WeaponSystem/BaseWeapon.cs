@@ -14,11 +14,11 @@ namespace Code.Runtime.Logic.WeaponSystem
         [SerializeField] protected int Damage;
         [SerializeField] protected float ShootForce;
         [SerializeField] private XRSocketInteractor magazineSocket;
+        [SerializeField] private float shootInterval;
 
         protected PlayerData PlayerData;
         private XRGrabInteractable _xrGrabInteractable;
         private IXRSelectInteractor _interactorObject;
-        private float _shootInterval;
         private float _shootTimer;
 
         private void Awake() =>
@@ -40,7 +40,7 @@ namespace Code.Runtime.Logic.WeaponSystem
 
         public override void FixedUpdateNetwork()
         {
-            if (_shootTimer < _shootInterval)
+            if (_shootTimer < shootInterval)
                 _shootTimer += Runner.DeltaTime;
         }
 
@@ -55,7 +55,7 @@ namespace Code.Runtime.Logic.WeaponSystem
         {
             if(CurrentMagazine == null) return;
             
-            if (CurrentMagazine.HasAmmo() && _shootTimer >= _shootInterval)
+            if (CurrentMagazine.HasAmmo() && _shootTimer >= shootInterval)
             {
                 ShootImplementation(SpawnBulletPoint.forward);
                 

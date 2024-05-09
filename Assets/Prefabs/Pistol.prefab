@@ -337,6 +337,7 @@ MonoBehaviour:
   Damage: 10
   ShootForce: 10
   magazineSocket: {fileID: 7417261056561648925}
+  shootInterval: 0.2
 --- !u!114 &8164656728305697791
 MonoBehaviour:
   m_ObjectHideFlags: 0

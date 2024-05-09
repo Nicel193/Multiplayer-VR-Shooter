@@ -8,6 +8,5 @@ namespace Code.Runtime.Configs
     {
         [field: SerializeField] public NetworkPlayer NetworkPlayerPrefab { get; private set; }
         [field: SerializeField] public int MaxPlayerHealth { get; private set; }
-        [field: SerializeField] public float MoveSpeed { get; private set; }
     }
 }
