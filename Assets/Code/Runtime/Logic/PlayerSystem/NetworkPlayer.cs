@@ -9,7 +9,7 @@ namespace Code.Runtime.Logic.PlayerSystem
     public class NetworkPlayer : NetworkBehaviour, INetworkPlayer
     {
         [field: SerializeField] public Transform WindowPosition { get; private set; }
-        
+
         public PlayerData PlayerData { get; private set; }
         public BaseWeapon PlayerWeapon { get; private set; }
 

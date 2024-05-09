@@ -2,6 +2,7 @@
 using Code.Runtime.Infrastructure.Bootstrappers;
 using Code.Runtime.Infrastructure.StateMachines;
 using Code.Runtime.Interactors;
+using Code.Runtime.Repositories;
 using Fusion;
 using UnityEngine;
 using Zenject;
@@ -10,8 +11,6 @@ namespace Code.Runtime.Installers
 {
     public class GameInstaller : MonoInstaller
     {
-        [SerializeField] private NetworkRunner networkRunner;
-        
         public override void InstallBindings()
         {
             BindGameBootstrapperFactory();
@@ -26,15 +25,7 @@ namespace Code.Runtime.Installers
 
             BindInteractorContainer();
 
-            // BindNetworkRunner();
-        }
-
-        private void BindNetworkRunner()
-        {
-            Container
-                .Bind<NetworkRunner>()
-                .FromInstance(networkRunner)
-                .AsSingle();
+            Container.Bind<UserRepository>().AsSingle();
         }
 
         private void BindInteractorContainer()
