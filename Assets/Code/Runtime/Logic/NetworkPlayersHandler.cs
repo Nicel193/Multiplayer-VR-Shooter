@@ -89,7 +89,7 @@ namespace Code.Runtime.Logic
 
         private Vector3 GetPlayerSpawnPosition(PlayerRef playerRef)
         {
-            Team teamColor = TeamsPlayers[playerRef];
+            Team teamColor = _localTeamsPlayers[playerRef];
 
             if (teamColor == Team.Red)
                 return redTeamSpawn.GetSpawnPosition();
