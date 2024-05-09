@@ -42,9 +42,9 @@ namespace Code.Runtime.Logic.PlayerSystem
 
             if (Health == 0)
             {
-                OnPlayerDead?.Invoke();
-                
                 IsPlayerDead = true;
+                
+                OnPlayerDead?.Invoke();
             }
         }
 
