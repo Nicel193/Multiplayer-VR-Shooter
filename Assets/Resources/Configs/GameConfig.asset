@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0624e7d6066b414ca14168af73375474, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
-  <WarmUpTime>k__BackingField: 3
-  <MatchTime>k__BackingField: 3
+  <WarmUpTime>k__BackingField: 10
+  <MatchTime>k__BackingField: 10
