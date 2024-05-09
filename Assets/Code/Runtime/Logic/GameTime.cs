@@ -26,33 +26,36 @@ namespace Code.Runtime.Logic
 
         public override void Spawned()
         {
-            if(!Object.HasStateAuthority) return;
-            
+            if (!Object.HasStateAuthority) return;
+
             GameTimer = TickTimer.CreateFromSeconds(Runner, _warmUpTime);
             CurrentGameTimeState = GameTimeState.WarmUp;
         }
-        
+
         public override void FixedUpdateNetwork()
         {
-            if (GameTimer.Expired(Runner))
-            {
-                switch (CurrentGameTimeState)
-                {
-                    case GameTimeState.WarmUp:
-                        GameTimer = TickTimer.CreateFromSeconds(Runner, _matchTime);
-                        CurrentGameTimeState = GameTimeState.Match;
-                        
-                        Debug.Log("Warm-up end");
-                        break;
-                    case GameTimeState.Match:
-                        _gameplayStateMachine.Enter<MathEndState>();
-                        CurrentGameTimeState = GameTimeState.End;
+            if (GameTimer.Expired(Runner)) RPC_ChangeState();
+        }
 
-                        Debug.Log("Match end");
-                        break;
-                    case GameTimeState.End:
-                        break;
-                }
+        [Rpc]
+        private void RPC_ChangeState()
+        {
+            switch (CurrentGameTimeState)
+            {
+                case GameTimeState.WarmUp:
+                    GameTimer = TickTimer.CreateFromSeconds(Runner, _matchTime);
+                    CurrentGameTimeState = GameTimeState.Match;
+
+                    Debug.Log("Warm-up end");
+                    break;
+                case GameTimeState.Match:
+                    _gameplayStateMachine.Enter<MathEndState>();
+                    CurrentGameTimeState = GameTimeState.End;
+
+                    Debug.Log("Match end");
+                    break;
+                case GameTimeState.End:
+                    break;
             }
         }
 
@@ -60,7 +63,7 @@ namespace Code.Runtime.Logic
         {
             return GameTimer.RemainingTime(Runner);
         }
-        
+
         private enum GameTimeState
         {
             WarmUp,
