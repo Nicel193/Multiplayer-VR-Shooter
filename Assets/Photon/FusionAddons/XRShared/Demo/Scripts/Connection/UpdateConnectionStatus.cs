@@ -1,8 +1,8 @@
 using Fusion;
-using Fusion.Addons.ConnectionManagerAddon;
 using Fusion.Sockets;
 using System;
 using System.Collections.Generic;
+using Photon.FusionAddons.ConnectionManager.Scripts;
 using TMPro;
 using UnityEngine;
 
@@ -28,9 +28,7 @@ public class UpdateConnectionStatus : MonoBehaviour, INetworkRunnerCallbacks
 
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
-
-        var connectionManager = runner.GetComponent<ConnectionManager>();
-        connectionManager.onWillConnect.AddListener(OnWillConnect);
+        
     }
 
     protected virtual void FindRunner()
@@ -56,11 +54,7 @@ public class UpdateConnectionStatus : MonoBehaviour, INetworkRunnerCallbacks
             Debug.Log(debug);
         }
     }
-
-    void OnWillConnect()
-    {
-        DebugLog("Starting connection. Please wait...");
-    }
+    
 
     #region INetworkRunnerCallbacks
     public virtual void OnPlayerJoined(NetworkRunner runner, PlayerRef player)

@@ -1216,6 +1216,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8814608142485645323, guid: 61132d80baa3c024d995c0e48ddf27df, type: 3}
+      propertyPath: runner
+      value: 
+      objectReference: {fileID: 1421894979}
+    - target: {fileID: 8814608142485645323, guid: 61132d80baa3c024d995c0e48ddf27df, type: 3}
       propertyPath: roomName
       value: DemoXRShared
       objectReference: {fileID: 0}
@@ -1224,25 +1228,37 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6613800669815143920, guid: b6aae18056a2dff4e828cee13d3b36fb, type: 3}
     - target: {fileID: 8814608142485645323, guid: 61132d80baa3c024d995c0e48ddf27df, type: 3}
+      propertyPath: sceneManager
+      value: 
+      objectReference: {fileID: 1421894980}
+    - target: {fileID: 8814608142485645323, guid: 61132d80baa3c024d995c0e48ddf27df, type: 3}
       propertyPath: additionalSessionProperties.Array.size
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2589809054354682351, guid: 61132d80baa3c024d995c0e48ddf27df, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1421894980}
   m_SourcePrefab: {fileID: 100100000, guid: 61132d80baa3c024d995c0e48ddf27df, type: 3}
 --- !u!114 &249176062 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8814608142485645323, guid: 61132d80baa3c024d995c0e48ddf27df, type: 3}
   m_PrefabInstance: {fileID: 249176061}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 249176063}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3b2dfec39f015045b1dbe3b2d68d390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &249176063 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2589809054354682351, guid: 61132d80baa3c024d995c0e48ddf27df, type: 3}
+  m_PrefabInstance: {fileID: 249176061}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &256737694
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6476,12 +6492,26 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1230383907373425524, guid: 61132d80baa3c024d995c0e48ddf27df, type: 3}
   m_PrefabInstance: {fileID: 249176061}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 249176063}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1199893898, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1421894980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249176063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a93abf1a391964a94e5c139605105b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsSceneTakeOverEnabled: 1
+  LogSceneLoadErrors: 1
 --- !u!1001 &1422209281
 PrefabInstance:
   m_ObjectHideFlags: 0
