@@ -1,7 +1,6 @@
 using Code.Runtime.Infrastructure.StateMachines;
 using Code.Runtime.Infrastructure.States;
 using Code.Runtime.Infrastructure.States.Gameplay;
-using Photon.FusionAddons.ConnectionManager.Scripts;
 using UnityEngine;
 using Zenject;
 
