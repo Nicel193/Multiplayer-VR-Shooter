@@ -10,8 +10,8 @@ namespace Code.Runtime.Logic
         [SerializeField] private NetworkPrefabRef itemPrefab;
         [SerializeField] private float respawnInterval = 1f;
 
+        private TickTimer IntervalTimer { get; set; }
         private XRSocketInteractor _xrSocketInteractor;
-        private TickTimer _intervalTimer;
         private bool _isItemRemoved;
 
         private void Awake()
@@ -30,7 +30,7 @@ namespace Code.Runtime.Logic
 
         public override void FixedUpdateNetwork()
         {
-            if (_isItemRemoved && _intervalTimer.Expired(Runner))
+            if (_isItemRemoved && IntervalTimer.Expired(Runner))
             {
                 SpawnItem();
                 
@@ -51,7 +51,7 @@ namespace Code.Runtime.Logic
         }
 
         private void StartIntervalTimer() =>
-            _intervalTimer = TickTimer.CreateFromSeconds(Runner, respawnInterval);
+            IntervalTimer = TickTimer.CreateFromSeconds(Runner, respawnInterval);
 
         private void SpawnItem()
         {

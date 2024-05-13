@@ -1,10 +1,11 @@
+using Fusion;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace Code.Runtime.Logic
 {
     [RequireComponent(typeof(XRGrabInteractable), typeof(Rigidbody))]
-    public class InventoryItem : MonoBehaviour
+    public class InventoryItem : NetworkBehaviour
     {
         [SerializeField] private bool isReturnInventoryItem;
         
@@ -43,7 +44,7 @@ namespace Code.Runtime.Logic
 
         private void RemoveItem(SelectExitEventArgs arg)
         {
-            if (isReturnInventoryItem)
+            if (isReturnInventoryItem && Object.HasStateAuthority)
             {
                 Transform socketTransform = _xrSocketInteractor.transform;
                 
