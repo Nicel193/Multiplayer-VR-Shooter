@@ -13,6 +13,7 @@ namespace Code.Runtime.Logic
         [Networked] private TickTimer IntervalTimer { get; set; }
         private XRSocketInteractor _xrSocketInteractor;
         private bool _isItemRemoved;
+        private bool _isSpawned;
 
         private void Awake()
         {
@@ -28,8 +29,15 @@ namespace Code.Runtime.Logic
             _xrSocketInteractor.selectEntered.RemoveListener(ReturnItem);
         }
 
-        public override void FixedUpdateNetwork()
+        public override void Spawned()
         {
+            _isSpawned = true;
+        }
+
+        public void Update()
+        {
+            if(!_isSpawned) return;
+
             if (_isItemRemoved && IntervalTimer.Expired(Runner))
             {
                 SpawnItem();

@@ -1,5 +1,6 @@
 using Code.Runtime.Logic.PlayerSystem;
 using Fusion;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -42,6 +43,8 @@ namespace Code.Runtime.Logic.WeaponSystem
         {
             if (_shootTimer < shootInterval)
                 _shootTimer += Runner.DeltaTime;
+
+            ThrowMagazine();
         }
 
         public void Initialize(PlayerData playerData)
@@ -64,10 +67,15 @@ namespace Code.Runtime.Logic.WeaponSystem
             }
         }
 
-        // private void ThrowMagazine()
-        // {
-        //     
-        // }
+        private void ThrowMagazine()
+        {
+            if (OVRInput.GetDown(OVRInput.RawButton.X) || OVRInput.GetDown(OVRInput.RawButton.A))
+            {
+                magazineSocket.EndManualInteraction();
+
+                CurrentMagazine = null;
+            }
+        }
 
         private void SelectMagazine(SelectEnterEventArgs arg)
         {
