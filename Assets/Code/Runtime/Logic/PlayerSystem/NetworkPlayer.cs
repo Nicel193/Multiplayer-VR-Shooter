@@ -5,7 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 namespace Code.Runtime.Logic.PlayerSystem
 {
-    [RequireComponent(typeof(NetworkPlayerRig), typeof(PlayerData))]
+    [RequireComponent(typeof(NetworkPlayerRig), typeof(PlayerData), typeof(CapsuleCollider))]
     public class NetworkPlayer : NetworkBehaviour, INetworkPlayer
     {
         [field: SerializeField] public Transform WindowPosition { get; private set; }
@@ -14,11 +14,13 @@ namespace Code.Runtime.Logic.PlayerSystem
         public BaseWeapon PlayerWeapon { get; private set; }
 
         private NetworkPlayerRig _networkPlayerRig;
+        private CapsuleCollider _capsuleCollider;
         private PlayerRig _playerRig;
 
         private void Awake()
         {
             _networkPlayerRig = GetComponent<NetworkPlayerRig>();
+            _capsuleCollider = GetComponent<CapsuleCollider>();
             PlayerData = GetComponent<PlayerData>();
         }
 
@@ -26,14 +28,9 @@ namespace Code.Runtime.Logic.PlayerSystem
         {
             if(!Object.HasStateAuthority) return;
 
-            _playerRig = FindObjectOfType<PlayerRig>();
+            _capsuleCollider.enabled = false;
             
-            _networkPlayerRig.Initialize(_playerRig);
-            
-            _playerRig.RightHand.selectEntered.AddListener(SelectWeapon);
-            _playerRig.RightHand.selectExited.AddListener(RemoveWeapon);
-            _playerRig.LeftHand.selectEntered.AddListener(SelectWeapon);
-            _playerRig.LeftHand.selectExited.AddListener(RemoveWeapon);
+            InitializePlayerRig();
         }
 
         public override void Despawned(NetworkRunner runner, bool hasState)
@@ -44,6 +41,18 @@ namespace Code.Runtime.Logic.PlayerSystem
             _playerRig.RightHand.selectExited.RemoveListener(RemoveWeapon);
             _playerRig.LeftHand.selectEntered.RemoveListener(SelectWeapon);
             _playerRig.LeftHand.selectExited.RemoveListener(RemoveWeapon);
+        }
+
+        private void InitializePlayerRig()
+        {
+            _playerRig = FindObjectOfType<PlayerRig>();
+
+            _networkPlayerRig.Initialize(_playerRig);
+
+            _playerRig.RightHand.selectEntered.AddListener(SelectWeapon);
+            _playerRig.RightHand.selectExited.AddListener(RemoveWeapon);
+            _playerRig.LeftHand.selectEntered.AddListener(SelectWeapon);
+            _playerRig.LeftHand.selectExited.AddListener(RemoveWeapon);
         }
 
         private void SelectWeapon(SelectEnterEventArgs arg)

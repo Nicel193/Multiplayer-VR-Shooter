@@ -354,7 +354,7 @@ MonoBehaviour:
   SpawnBulletPoint: {fileID: 8164656727957390678}
   BulletPrefab: {fileID: 6523933056996810513, guid: eb32664d32213744891fc11bd0af42b6, type: 3}
   Damage: 10
-  ShootForce: 10
+  ShootForce: 30
   magazineSocket: {fileID: 7417261056561648925}
   shootInterval: 0.2
 --- !u!114 &8164656728305697791
