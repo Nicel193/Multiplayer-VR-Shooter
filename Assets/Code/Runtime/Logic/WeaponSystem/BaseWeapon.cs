@@ -64,6 +64,11 @@ namespace Code.Runtime.Logic.WeaponSystem
             }
         }
 
+        // private void ThrowMagazine()
+        // {
+        //     
+        // }
+
         private void SelectMagazine(SelectEnterEventArgs arg)
         {
             if (arg.interactableObject.transform.TryGetComponent(out Magazine magazine))

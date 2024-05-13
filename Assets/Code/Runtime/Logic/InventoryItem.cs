@@ -1,11 +1,10 @@
-using Fusion;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace Code.Runtime.Logic
 {
     [RequireComponent(typeof(XRGrabInteractable), typeof(Rigidbody))]
-    public class InventoryItem : NetworkBehaviour
+    public class InventoryItem : MonoBehaviour
     {
         [SerializeField] private bool isReturnInventoryItem;
         
@@ -44,7 +43,7 @@ namespace Code.Runtime.Logic
 
         private void RemoveItem(SelectExitEventArgs arg)
         {
-            if (isReturnInventoryItem && Object.HasStateAuthority)
+            if (isReturnInventoryItem)
             {
                 Transform socketTransform = _xrSocketInteractor.transform;
                 
@@ -55,7 +54,10 @@ namespace Code.Runtime.Logic
             {
                 transform.SetParent(null);
                 _rigidbody.isKinematic = false;
+                _xrGrabInteractable = null;
             }
         }
+
+        public bool IsSlotItem() => _xrGrabInteractable != null;
     }
 }

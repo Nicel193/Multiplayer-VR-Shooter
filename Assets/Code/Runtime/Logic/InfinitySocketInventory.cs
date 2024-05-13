@@ -10,7 +10,7 @@ namespace Code.Runtime.Logic
         [SerializeField] private NetworkPrefabRef itemPrefab;
         [SerializeField] private float respawnInterval = 1f;
 
-        private TickTimer IntervalTimer { get; set; }
+        [Networked] private TickTimer IntervalTimer { get; set; }
         private XRSocketInteractor _xrSocketInteractor;
         private bool _isItemRemoved;
 
