@@ -1,0 +1,66 @@
+using Fusion;
+using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+
+namespace Code.Runtime.Logic
+{
+    [RequireComponent(typeof(XRSocketInteractor))]
+    public class InfinitySocketInventory : NetworkBehaviour
+    {
+        [SerializeField] private NetworkPrefabRef itemPrefab;
+        [SerializeField] private float respawnInterval = 1f;
+
+        private XRSocketInteractor _xrSocketInteractor;
+        private TickTimer _intervalTimer;
+        private bool _isItemRemoved;
+
+        private void Awake()
+        {
+            _xrSocketInteractor = GetComponent<XRSocketInteractor>();
+
+            _xrSocketInteractor.selectExited.AddListener(RemoveItem);
+            _xrSocketInteractor.selectEntered.AddListener(ReturnItem);
+        }
+
+        private void OnDestroy()
+        {
+            _xrSocketInteractor.selectExited.RemoveListener(RemoveItem);
+            _xrSocketInteractor.selectEntered.RemoveListener(ReturnItem);
+        }
+
+        public override void FixedUpdateNetwork()
+        {
+            if (_isItemRemoved && _intervalTimer.Expired(Runner))
+            {
+                SpawnItem();
+                
+                _isItemRemoved = false;
+            }
+        }
+
+        private void RemoveItem(SelectExitEventArgs arg)
+        {
+            StartIntervalTimer();
+            
+            _isItemRemoved = true;
+        }
+
+        private void ReturnItem(SelectEnterEventArgs arg)
+        {
+            _isItemRemoved = false;
+        }
+
+        private void StartIntervalTimer() =>
+            _intervalTimer = TickTimer.CreateFromSeconds(Runner, respawnInterval);
+
+        private void SpawnItem()
+        {
+            NetworkObject spawnedItem = Runner.Spawn(itemPrefab, _xrSocketInteractor.transform.position, Quaternion.identity);
+
+            spawnedItem.transform.SetParent(_xrSocketInteractor.transform);
+
+            if (spawnedItem.TryGetComponent(out InventoryItem item))
+                item.Initialize(_xrSocketInteractor);
+        }
+    }
+}
