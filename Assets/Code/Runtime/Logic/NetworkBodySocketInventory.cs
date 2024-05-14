@@ -14,7 +14,7 @@ namespace Code.Runtime.Logic
             
             BodySocketInventory bodySocketInventory = FindObjectOfType<BodySocketInventory>();
 
-            if (bodySocketInventory.bodySockets.Length < itemsPrefabs.Length)
+            if (bodySocketInventory.BodySockets.Length < itemsPrefabs.Length)
             {
                 Debug.LogError("In network inventory items more than possible slots");
 
@@ -23,7 +23,7 @@ namespace Code.Runtime.Logic
 
             for (int i = 0; i < itemsPrefabs.Length; i++)
             {
-                XRSocketInteractor xrSocketInteractor = bodySocketInventory.bodySockets[i].SocketInteractor;
+                XRSocketInteractor xrSocketInteractor = bodySocketInventory.BodySockets[i].SocketInteractor;
                 Vector3 socketPosition = xrSocketInteractor.gameObject.transform.position;
 
                 NetworkObject spawnedObject = Runner.Spawn(itemsPrefabs[i], socketPosition, Quaternion.identity);
